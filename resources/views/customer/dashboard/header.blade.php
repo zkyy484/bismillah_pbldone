@@ -1,41 +1,37 @@
-<header class="bg-white shadow-md sticky top-0 z-50">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-        <div class="flex items-center">
-            <img src="https://via.placeholder.com/40" alt="Logo Toko" class="h-10 mr-2">
-            <h1 class="text-xl font-semibold text-gray-800">Nama Toko</h1>
-        </div>
+@php
+    $id = Auth::user()->id;
+    $profileData = App\Models\User::find($id);
+    @endphp
 
-        @php
-            $id = Auth::user()->id;
-            $profileData = App\Models\User::find($id);
-        @endphp
+<nav class="fixed w-full top-0 left-0 z-50 bg-coklat py-2.5 shadow-navbar transition-opacity duration-300">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <img src="logo.jpg" alt="Logo" class="w-11 h-11 object-cover rounded-full border-2 border-white">
+                <a href="{{route('index')}}" class="text-white text-xl font-bold">Nazarch Studio</a>
+            </div>
 
-        <nav class="hidden md:block">
-            <ul class="flex space-x-6">
-                <li><a href="#" class="text-gray-800 hover:text-primary transition"><i class="fas fa-home mr-1"></i>
-                        Home</a></li>
-                <li><a href="#" class="text-gray-800 hover:text-primary transition"><i class="fas fa-list mr-1"></i>
-                        Kategori</a></li>
-                <li><a href="#" class="text-gray-800 hover:text-primary transition"><i
-                            class="fas fa-info-circle mr-1"></i> Tentang</a></li>
-                <li><a href="#" class="text-gray-800 hover:text-primary transition"><i class="fas fa-phone mr-1"></i>
-                        Kontak</a></li>
-            </ul>
-        </nav>
+            <div class="hidden md:flex gap-12">
+                <a href="{{route('index')}}" class="text-white font-medium hover:text-cream transition-colors">Home</a>
+                <a href="" class="text-white font-medium hover:text-cream transition-colors">Categories</a>
+                <a href="#" class="text-white font-medium hover:text-cream transition-colors">About</a>
+                <a href="{{route('show.contact')}}" class="text-white font-medium hover:text-cream transition-colors">Contact</a>
+            </div>
 
-        <div class="flex items-center relative group">
-            <img src="https://via.placeholder.com/35" alt="User Profile" class="w-8 h-8 rounded-full mr-2">
-            <span class="text-gray-800 cursor-pointer">Nama User</span>
-            
-            <!-- Dropdown Menu -->
-            <div class="absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
-                <a href="{{route('dashboard')}}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition">
-                    <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
-                </a>
-                <a href="{{route('user.logout')}}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition">
-                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
-                </a>
+            <!-- Profile Dropdown -->
+            <div class="relative flex items-center gap-4">
+                <a href="#" class="text-white font-semibold hidden sm:inline">{{$profileData->name}}</a>
+                <button id="dropdownButton" class="focus:outline-none">
+                    <img src="{{(!empty($profileData->photo)) ? url('upload/user_images/'. $profileData->photo) : url('upload/no_image.jpg') }}" alt="Profile"
+                        class="w-11 h-11 object-cover rounded-full border-2 border-white">
+                </button>
+                <ul id="dropdownMenu"
+                    class="absolute right-0 top-14 bg-white shadow-lg rounded-lg text-sm hidden min-w-[140px] z-50">
+                    <li><a class="block px-4 py-2 hover:bg-gray-100" href="{{route('dashboard')}}">Dashboard</a></li>
+                    <li><a class="block px-4 py-2 hover:bg-gray-100" href="#">Keranjang</a></li>
+                    <li><a class="block px-4 py-2 hover:bg-gray-100" href="{{ route('user.logout') }}">Log Out</a></li>
+                </ul>
             </div>
         </div>
     </div>
-</header>
+</nav>

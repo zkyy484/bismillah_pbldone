@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +16,15 @@
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    {{-- <link rel="stylesheet" href="{{assets('backend/assets/js/validate.min.js')}}"> --}}
+    {{--
+    <link rel="stylesheet" href="{{assets('backend/assets/js/validate.min.js')}}"> --}}
 
     <!-- Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @yield('head')
 </head>
+
 <body class="bg-gray-100 font-sans">
     <div class="flex h-screen">
         <!-- Sidebar -->
@@ -43,9 +46,15 @@
 
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="{{assets('backend/assets/js/validate.min.js')}}"></script>
+    <script src="{{ asset('backend/assets/js/validate.min.js') }}"></script>
+
+    {{-- Add smeetalert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{{ asset('backend/assets/js/code.js') }}"></script>
+    
 
     <!-- Section tambahan script -->
     @yield('scripts')
 </body>
+
 </html>

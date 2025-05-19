@@ -7,6 +7,9 @@
     <title>Edit Profile - Nama Toko</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    {{--
     <script>
         tailwind.config = {
             theme: {
@@ -15,6 +18,63 @@
                         primary: '#4CAF50',
                         primaryHover: '#45a049',
                     }
+                }
+            }
+        }
+    </script> --}}
+
+    <style>
+        .overlay {
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .item:hover .overlay {
+            transform: translateY(0%);
+        }
+
+        .item:hover img {
+            transform: scale(1.05);
+        }
+
+        .slide {
+            transition: opacity 1s ease-in-out;
+        }
+
+        .overlay {
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .item:hover .overlay {
+            transform: translateY(0%);
+        }
+
+        .item:hover img {
+            transform: scale(1.05);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coklat: '#40342A',
+                        cream: '#F2F0EB',
+                        putih: '#fff',
+                        hitam: '#000000',
+                        abu: '#333',
+                        primary: '#4CAF50',
+                        primaryHover: '#45a049',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        card: '0 4px 15px rgba(0,0,0,0.1)',
+                        cardhover: '0 8px 20px rgba(63, 39, 2, 0.808)',
+                        navbar: '0 2px 10px rgba(0,0,0,0.1)',
+                    },
                 }
             }
         }
@@ -30,7 +90,7 @@
     @include('customer.dashboard.header')
 
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-8">
+    <main class="flex-grow container mx-auto px-4 py-8 mt-16">
         <div class="flex flex-col lg:flex-row gap-6">
             <!-- Sidebar -->
             @include('customer.dashboard.sidebar')
@@ -38,59 +98,32 @@
             <!-- Content -->
             <div class="flex-grow bg-white rounded-lg shadow-md p-8">
                 <div class="flex justify-between items-center pb-4 mb-8 border-b border-gray-200">
-                    <h2 class="text-2xl font-semibold text-gray-800">Change Password Profile</h2>
+                    <h2 class="text-2xl font-semibold text-gray-800">Change Password</h2>
                 </div>
 
-                <form class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="firstName" class="block text-gray-700 font-medium mb-2">Nama Depan</label>
-                            <input type="text" id="firstName" value="Nama"
-                                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                        </div>
-                        <div>
-                            <label for="lastName" class="block text-gray-700 font-medium mb-2">Nama Belakang</label>
-                            <input type="text" id="lastName" value="User"
-                                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                        </div>
+                <form class="space-y-6" method="POST" action="{{ route('user.password.update') }}"
+                    enctype="multipart/form-data">
+                    @csrf
+                    
+                    <div>
+                        <label for="old_password" class="block text-gray-700 font-medium mb-2">Password Lama</label>
+                        <input type="password" id="old_password" name="old_password" value=""
+                            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-coklat focus:border-transparent">
                     </div>
 
                     <div>
-                        <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
-                        <input type="email" id="email" value="user@example.com"
-                            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        <label for="new_password" class="block text-gray-700 font-medium mb-2">Password Baru</label>
+                        <input type="password" id="new_password" name="new_password" value=""
+                            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-coklat focus:border-transparent">
                     </div>
 
                     <div>
-                        <label for="phone" class="block text-gray-700 font-medium mb-2">Nomor Telepon</label>
-                        <input type="tel" id="phone" value="081234567890"
-                            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        <label for="new_password_confirmation" class="block text-gray-700 font-medium mb-2">Konfirmasi Password Baru</label>
+                        <input type="password" id="new_password_confirmation" name="new_password_confirmation" value=""
+                            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-coklat focus:border-transparent">
                     </div>
 
-                    <div>
-                        <label for="address" class="block text-gray-700 font-medium mb-2">Alamat</label>
-                        <textarea id="address" rows="4"
-                            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">Jl. Contoh No. 123, Kota Contoh, 12345</textarea>
-                    </div>
-
-                    <div>
-                        <label for="gender" class="block text-gray-700 font-medium mb-2">Jenis Kelamin</label>
-                        <select id="gender"
-                            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                            <option value="male">Laki-laki</option>
-                            <option value="female">Perempuan</option>
-                            <option value="other" selected>Lainnya</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="birthdate" class="block text-gray-700 font-medium mb-2">Tanggal Lahir</label>
-                        <input type="date" id="birthdate" value="1990-01-01"
-                            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                    </div>
-
-                    <button type="submit"
-                        class="bg-primary text-white px-6 py-3 rounded hover:bg-primaryHover transition">
+                    <button type="submit" class="bg-coklat text-white px-6 py-3 rounded hover:bg-abu transition">
                         Simpan Perubahan
                     </button>
                 </form>
@@ -107,19 +140,6 @@
             // Tambahkan kelas active ke menu sidebar yang diklik
             const menuItems = document.querySelectorAll('aside ul li a');
             menuItems.forEach(item => {
-                item.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    menuItems.forEach(i => i.classList.remove('bg-gray-100', 'text-primary'));
-                    this.classList.add('bg-gray-100', 'text-primary');
-                });
-            });
-
-            // Handle form submission
-            const profileForm = document.querySelector('form');
-            profileForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-                alert('Perubahan profil berhasil disimpan!');
-                // Di sini Anda bisa menambahkan kode untuk mengirim data ke server
             });
 
             // Edit profile button in sidebar
@@ -130,6 +150,95 @@
                 });
             });
         });
+    </script>
+
+    {{-- sc boostrap --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+
+    {{-- sc navbar --}}
+    <script>
+        const navbar = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.opacity = '0.8';
+            } else {
+                navbar.style.opacity = '1';
+            }
+        });
+
+        const dropdownButton = document.getElementById('dropdownButton');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        dropdownButton.addEventListener('click', function () {
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
+    </script>
+
+    {{-- preview image --}}
+    <script>
+        // Image carousel
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        setInterval(() => {
+            slides.forEach((img, i) => {
+                img.style.opacity = (i === slideIndex) ? '1' : '0';
+            });
+            slideIndex = (slideIndex + 1) % slides.length;
+        }, 3000);
+    </script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    {{-- message --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+    <script>
+        // Preview gambar saat dipilih
+        $('#photo').on('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#preview-image').attr('src', e.target.result);
+                    $('#preview-container').removeClass('hidden');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $('#preview-container').addClass('hidden');
+                $('#preview-image').attr('src', '');
+            }
+        });
+    </script>
+
+    {{-- message --}}
+    <script>
+        @if(Session::has('message'))
+            var type = "{{ Session::get('alert-type', 'info') }}";
+            switch (type) {
+                case 'info':
+                    toastr.info("{{ Session::get('message') }}");
+                    break;
+                case 'success':
+                    toastr.success("{{ Session::get('message') }}");
+                    break;
+                case 'warning':
+                    toastr.warning("{{ Session::get('message') }}");
+                    break;
+                case 'error':
+                    toastr.error("{{ Session::get('message') }}");
+                    break;
+            }
+        @endif
     </script>
 </body>
 

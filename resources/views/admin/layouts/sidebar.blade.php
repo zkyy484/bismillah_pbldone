@@ -14,33 +14,19 @@
                 </span>
             </div>
             <div class="mt-4 space-y-2"> <!-- Added space-y-2 for vertical spacing between menu items -->
-                <!-- Products Dropdown -->
-                <div x-data="{ open: false }" class="relative">
-                    <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-gray-200 hover:bg-putih hover:text-cokelat rounded-lg transition-colors duration-200">
-                        <div class="flex items-center">
-                            <i class="fas fa-building mr-3"></i>
-                            <span>Produk</span>
-                        </div>
-                        <i :class="{'transform rotate-180': open}" class="fas fa-chevron-down transition-transform duration-200 text-sm"></i>
-                    </button>
-                    <div x-show="open" @click.outside="open = false" class="ml-6 mt-1 bg-[#504538] rounded-lg space-y-1 py-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Semua Data</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Tambah Data</a>
-                    </div>
-                </div>
 
                 <!-- Product Photos Dropdown -->
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-gray-200 hover:bg-putih hover:text-cokelat rounded-lg transition-colors duration-200">
                         <div class="flex items-center">
                             <i class="fas fa-images mr-3"></i>
-                            <span>Foto Produk</span>
+                            <span>Image Category</span>
                         </div>
                         <i :class="{'transform rotate-180': open}" class="fas fa-chevron-down transition-transform duration-200 text-sm"></i>
                     </button>
                     <div x-show="open" @click.outside="open = false" class="ml-6 mt-1 bg-[#504538] rounded-lg space-y-1 py-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Semua Data</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Tambah Data</a>
+                        <a href="{{route('all.catimage')}}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Semua Data</a>
+                        <a href="{{route('add.catimage')}}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Tambah Data</a>
                     </div>
                 </div>
 
@@ -49,7 +35,7 @@
                     <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-gray-200 hover:bg-putih hover:text-cokelat rounded-lg transition-colors duration-200">
                         <div class="flex items-center">
                             <i class="fas fa-layer-group mr-3"></i>
-                            <span>Kategori</span>
+                            <span>Desain Rumah</span>
                         </div>
                         <i :class="{'transform rotate-180': open}" class="fas fa-chevron-down transition-transform duration-200 text-sm"></i>
                     </button>
@@ -84,8 +70,7 @@
                         <i :class="{'transform rotate-180': open}" class="fas fa-chevron-down transition-transform duration-200 text-sm"></i>
                     </button>
                     <div x-show="open" @click.outside="open = false" class="ml-6 mt-1 bg-[#504538] rounded-lg space-y-1 py-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Semua Data</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Tambah Data</a>
+                        <a href="{{route('all.order')}}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Semua Data</a>
                     </div>
                 </div>
 
@@ -94,12 +79,12 @@
                     <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-gray-200 hover:bg-putih hover:text-cokelat rounded-lg transition-colors duration-200">
                         <div class="flex items-center">
                             <i class="fas fa-file-invoice mr-3"></i>
-                            <span>Invoice</span>
+                            <span>Transaksi</span>
                         </div>
                         <i :class="{'transform rotate-180': open}" class="fas fa-chevron-down transition-transform duration-200 text-sm"></i>
                     </button>
                     <div x-show="open" @click.outside="open = false" class="ml-6 mt-1 bg-[#504538] rounded-lg space-y-1 py-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Semua Data</a>
+                        <a href="{{route('transaksi')}}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Semua Data</a>
                         <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Tambah Data</a>
                     </div>
                 </div>
