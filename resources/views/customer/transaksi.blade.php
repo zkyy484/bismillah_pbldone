@@ -14,8 +14,8 @@
             <div class="p-6 md:p-8">
                 <!-- Payment illustration with decorative border -->
                 <div class="mb-8 flex justify-center relative">
-                    <img src="{{ asset('upload/rumah.jpg') }}" alt="Payment Illustration"
-                        class="relative max-w-md w-full rounded-lg shadow-md transform ">
+                    <img src="{{ asset('upload/logo.jpg') }}" alt="Payment Illustration"
+                        class="relative max-w-md w-full rounded-lg transform ">
                 </div>
 
                 <!-- Order summary with elegant styling -->

@@ -37,7 +37,10 @@ class CategoryController extends Controller
                 $constraint->upsize();      // Jangan perbesar gambar kecil
             });
 
-            $save_url = 'upload/category/' . $name_gen;
+            $save_path = public_path('upload/category/' . $name_gen); // path lengkap untuk simpan file
+            $img->save($save_path); // simpan file ke disk
+
+            $save_url = 'upload/category/' . $name_gen; // simpan path ke DB
 
             Category::create([
                 'nama_categori' => $request->nama_categori,
@@ -65,51 +68,54 @@ class CategoryController extends Controller
     public function UpdateCategory(Request $request)
     {
         $cat_id = $request->id;
+        $category = Category::find($cat_id);
 
         if ($request->file('photo')) {
+            // Hapus foto lama milik kategori ini saja
+            if ($category->photo && file_exists(public_path($category->photo))) {
+                unlink(public_path($category->photo));
+            }
+
+            // Upload foto baru
             $image = $request->file('photo');
             $manager = new ImageManager(new Driver());
-            
-            $name_gen = hexdec(uniqid()) . '.' .
-                $image->getClientOriginalExtension();
+
+            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             $img = $manager->read($image);
-            
             $img->resize(1600, 900)->save(public_path('upload/category/' . $name_gen));
+
             $save_url = 'upload/category/' . $name_gen;
 
-
-
-            Category::find($cat_id)->update([
+            // Update dengan foto baru
+            $category->update([
                 'nama_categori' => $request->nama_categori,
                 'photo' => $save_url,
                 'description' => $request->description,
                 'base_price' => $request->base_price
             ]);
 
-            $notification = array(
-                'message' => 'Berhasil menambahkan kategori',
+            $notification = [
+                'message' => 'Berhasil mengubah kategori dan mengganti foto',
                 'alert-type' => 'success'
-            );
-
-            return redirect()->route('all.category')->with($notification);
-
+            ];
         } else {
-            Category::find($cat_id)->update([
+            // Update tanpa mengganti foto
+            $category->update([
                 'nama_categori' => $request->nama_categori,
                 'description' => $request->description,
                 'base_price' => $request->base_price
             ]);
 
-            $notification = array(
+            $notification = [
                 'message' => 'Berhasil mengubah kategori',
                 'alert-type' => 'success'
-            );
-
-            return redirect()->route('all.category')->with($notification);
+            ];
         }
 
-
+        return redirect()->route('all.category')->with($notification);
     }
+
+
 
     public function DeleteCategory($id)
     {

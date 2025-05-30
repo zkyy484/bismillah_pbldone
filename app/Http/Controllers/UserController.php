@@ -4,33 +4,69 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\order;
+use App\Models\Review;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function Index() {
+
+    public function index()
+    {
         $allcts = Category::orderBy('id', 'asc')->take(6)->get();
         $cts = Category::orderBy('id', 'asc')->take(3)->get();
-        return view('customer.home', compact('cts', 'allcts')) ;
+
+        // Hanya ambil review yang disetujui
+        $reviews = Review::with(['user', 'order.category'])
+            ->where('is_approved', true)
+            ->latest()
+            ->take(6)
+            ->get();
+
+        // Hitung berdasarkan review yang disetujui
+        $totalReviews = Review::where('is_approved', true)->count();
+
+        $averageRating = Review::where('is_approved', true)->avg('rating');
+
+        $ratingsCount = Review::where('is_approved', true)
+            ->select('rating', DB::raw('count(*) as total'))
+            ->groupBy('rating')
+            ->pluck('total', 'rating')
+            ->toArray();
+
+        return view('customer.home', compact(
+            'cts',
+            'allcts',
+            'reviews',
+            'totalReviews',
+            'averageRating',
+            'ratingsCount'
+        ));
     }
+
+
 
     // public function Kategori() {
     //     return view('customer.detail');
     // }
 
-    public function Detail() {
+    public function Detail()
+    {
         return view('customer.detail');
     }
 
-    public function Order() {
+    public function Order()
+    {
         $category = Category::latest()->get();
         return view('customer.pemesanan', compact('category'));
     }
 
-    public function ProfileStore(Request $request) {
+    public function ProfileStore(Request $request)
+    {
         $id = Auth::user()->id;
         $data = User::find($id);
 
@@ -43,8 +79,8 @@ class UserController extends Controller
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
-            $filename = time().'.'.$file->getClientOriginalExtension();
-            $file->move(public_path('upload/user_images'),$filename);
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/user_images'), $filename);
             $data->photo = $filename;
             if ($oldPhotoPath && $oldPhotoPath !== $filename) {
                 $this->deleteOldImage($oldPhotoPath);
@@ -60,23 +96,27 @@ class UserController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    private function deteletoldImage(string $oldPhotoPath): void {
-        $fullPath = public_path('upload/user_images/'.$oldPhotoPath);
+    private function deleteOldImage(string $oldPhotoPath): void
+    {
+        $fullPath = public_path('upload/user_images/' . $oldPhotoPath);
         if (file_exists($fullPath)) {
             unlink($fullPath);
         }
     }
 
-    public function UserLogout() {
+    public function UserLogout()
+    {
         Auth::guard('web')->logout();
         return redirect()->route('login')->with('success', 'Logout Berhasil');
     }
 
-    public function ChangePassword() {
+    public function ChangePassword()
+    {
         return view('customer.dashboard.change_password');
     }
 
-    public function PasswordUpdate(Request $request) {
+    public function PasswordUpdate(Request $request)
+    {
         $user = Auth::guard('web')->user();
         $request->validate([
             'old_password' => 'required',
@@ -104,21 +144,44 @@ class UserController extends Controller
     }
 
     // show detail order
-    public function HistoryOrder() {
+    public function HistoryOrder()
+    {
         $orders = order::latest()->get();
         return view('customer.dashboard.order', compact('orders'));
+    }
+
+    public function HistoryTransaksi()
+    {
+        $transactions = Transaction::with(['order.category'])
+            ->whereHas('order', function ($query) {
+                $query->where('user_id', auth()->id());
+            })
+            ->latest()
+            ->get();
+        return view('customer.dashboard.transaksi', compact('transactions'));
     }
 
 
 
     // Frontend
-    public function showCategory($id) {
+    public function showCategory($id)
+    {
         $category = Category::with('images')->findOrFail($id);
         return view('customer.detail', compact('category'));
     }
 
-    public function showContact() {
+    public function showContact()
+    {
         return view('customer.contact');
     }
 
+    public function showAboutUs() {
+        return view('customer.about');
+    }
+
+    public function showKategory() {
+        $cts = Category::latest()->get();
+        return view('customer.kategori', compact('cts'));
+    }
+    
 }

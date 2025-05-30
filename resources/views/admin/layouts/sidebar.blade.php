@@ -99,8 +99,7 @@
                         <i :class="{'transform rotate-180': open}" class="fas fa-chevron-down transition-transform duration-200 text-sm"></i>
                     </button>
                     <div x-show="open" @click.outside="open = false" class="ml-6 mt-1 bg-[#504538] rounded-lg space-y-1 py-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Semua Data</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Tambah Data</a>
+                        <a href="{{route('ulasan')}}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-putih hover:text-cokelat rounded-md">Semua Data</a>
                     </div>
                 </div>
             </div>

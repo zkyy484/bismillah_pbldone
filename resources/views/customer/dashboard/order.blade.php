@@ -24,6 +24,20 @@
     </script> --}}
 
     <style>
+        /* Scrollbar vertikal */
+        .overflow-y-auto::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+            background-color: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        .overflow-y-auto::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+
         .overlay {
             transform: translateY(100%);
             transition: transform 0.4s ease;
@@ -97,55 +111,74 @@
 
             <!-- Riwayat Pemesanan -->
             <div class="flex-grow bg-white rounded-lg shadow-none p-8">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Riwayat Pemesanan</h2>
-                <hr class="border-a border-gray-300 mb-12">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Riwayat Pemesanan</h2>
+    <hr class="border-a border-gray-300 mb-8">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach ($orders as $order)
-                        <div
-                            class="bg-cream rounded-lg p-4 transition duration-300 overflow-hidden transition transform duration-300 hover:scale-105">
-                            <img src="{{ asset($order->category->photo)}}" alt="Produk" class="w-full h-48 object-cover">
-                            <div class="p-4">
-                                <h3 class="text-lg font-semibold text-coklat mb-2">{{$order->category->nama_categori}}</h3>
-                                <p class="text-gray-700 mb-1"><span class="font-medium">Harga Total:</span> Rp
-                                    {{ number_format($order->price, 0, ',', '.') }}
-                                </p>
-                                <p class="text-gray-700 mb-1"><span class="font-medium">Catatan:</span>
-                                    {{ $order->notes ?? '-' }}</p>
-                                <p class="text-gray-700"><span class="font-medium">Status:</span>
-                                    <span class="inline-block px-2 py-1 text-sm rounded 
-                        @if($order->status == 'completed') bg-green-100 text-green-800 
-                        @elseif($order->status == 'confirmed') bg-yellow-100 text-yellow-800 
-                            @else bg-red-100 text-red-800 
-                        @endif">
-                                        {{ ucfirst($order->status) }}
-                                    </span>
-                                </p>
+    <!-- Container utama dengan batasan tinggi -->
+    <div class="max-h-[70vh] flex flex-col"> <!-- Batasi tinggi maksimal -->
+        <!-- Container scroll dengan flex-1 -->
+        <div class="flex-1 overflow-y-auto pr-2"> <!-- Gunakan flex-1 untuk mengisi ruang tersedia -->
+            <div class="flex flex-col gap-4"> <!-- Container untuk card-card -->
+                @foreach ($orders as $order)
+                    <div class="bg-cream rounded-lg w-full hover:shadow-md transition duration-300 transform hover:scale-[1.005] flex flex-col md:flex-row items-stretch overflow-hidden">
+                        <!-- Bagian Foto Produk -->
+                        <div class="md:w-1/3 w-full flex">
+                            <div class="p-3 w-full flex items-stretch">
+                                <div class="relative w-full" style="padding-bottom: 100%;">
+                                    <img src="{{ asset($order->category->photo) }}" alt="Produk"
+                                        class="absolute top-0 left-0 w-full h-full object-cover rounded-md shadow-sm">
+                                </div>
+                            </div>
+                        </div>
 
-                                {{-- Tombol Dinamis --}}
-                                <div class="mt-4">
+                        <!-- Konten di kanan -->
+                        <div class="w-full md:w-2/3 p-4 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-coklat mb-1">{{ $order->category->nama_categori }}
+                                    </h3>
+                                    <p class="text-sm text-gray-700 mb-1"><span class="font-medium">Harga Total:</span> Rp
+                                        {{ number_format($order->price, 0, ',', '.') }}
+                                    </p>
+                                    <p class="text-sm text-gray-700 mb-1"><span class="font-medium">Catatan:</span>
+                                        {{ $order->notes ?? '-' }}
+                                    </p>
+                                    <p class="text-sm text-gray-700 mb-2"><span class="font-medium">Status:</span>
+                                        <span class="inline-block px-2 py-1 text-xs rounded
+                                    @if($order->status == 'completed') bg-green-100 text-green-800 
+                                    @elseif($order->status == 'confirmed') bg-yellow-100 text-yellow-800 
+                                        @else bg-red-100 text-red-800 
+                                    @endif">
+                                            {{ ucfirst($order->status) }}
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div class="mt-2">
                                     @if($order->status === 'pending')
                                         <a href="{{ route('user.transaksi', $order->id) }}"
-                                            class="inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                                            class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
                                             Bayar Sekarang
                                         </a>
                                     @elseif($order->status === 'completed')
-                                        <a href=""
-                                            class="inline-block w-full text-center bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                                        <a href="{{route('user.review', $order->id)}}"
+                                            class="block w-full text-center bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
                                             Beri Ulasan
                                         </a>
                                     @endif
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
-
-                </div>
+                    </div>
+                @endforeach
 
                 @if($orders->isEmpty())
                     <p class="text-gray-500 mt-6">Belum ada riwayat pemesanan.</p>
                 @endif
             </div>
+        </div>
+    </div>
+</div>
+
+
         </div>
     </main>
 
@@ -259,6 +292,8 @@
             }
         @endif
     </script>
+
+
 </body>
 
 </html>

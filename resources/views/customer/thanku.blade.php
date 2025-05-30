@@ -51,7 +51,7 @@
                             </svg>
                             Lihat Pesanan
                         </a>
-                        <a href=""
+                        <a href="{{route('user.order')}}"
                             class="px-6 py-3 bg-coklat text-white rounded-lg hover:bg-coklat-dark transition duration-300 shadow-sm flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="mt-8 text-sm text-gray-500">
-                        <p>Butuh bantuan? <a href="mailto:cs@desainrumah.com" class="text-coklat hover:underline">Hubungi
+                        <p>Butuh bantuan? <a href="{{route('show.contact')}}" class="text-coklat hover:underline">Hubungi
                                 Customer Service</a></p>
                     </div>
                 </div>

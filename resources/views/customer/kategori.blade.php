@@ -9,71 +9,20 @@
 
         <!-- First Category Section -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            <div
-                class="bg-white rounded-lg overflow-hidden shadow-card hover:shadow-cardhover hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                <div class="h-48 overflow-hidden">
-                    <img src="{{url('/upload/rumah.jpg')}}" alt="" class="w-full h-full object-cover">
-                </div>
-                <div class="p-5">
-                    <h3 class="text-xl text-coklat text-center font-semibold mb-2">Kategori 1</h3>
-                    <p class="text-abu text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-            </div>
+            @foreach ($cts as $item)
+                <a href="{{route('kategori.detail', $item->id)}}"
+                    class="bg-white rounded-lg overflow-hidden shadow-card hover:shadow-cardhover hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                    <div class="h-48 overflow-hidden">
+                        <img src="{{ (!empty($item->photo)) ? url($item->photo) : url('upload/rumah.jpg') }}" alt="" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-xl text-coklat text-center font-semibold mb-2">{{$item->nama_categori}}</h3>
+                        <p class="text-abu text-center">{{$item->description}}</p>
+                    </div>
+                </a>
+            @endforeach
 
-            <div
-                class="bg-white rounded-lg overflow-hidden shadow-card hover:shadow-cardhover hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                <div class="h-48 overflow-hidden">
-                    <img src="{{url('/upload/rumah.jpg')}}" alt="" class="w-full h-full object-cover">
-                </div>
-                <div class="p-5">
-                    <h3 class="text-xl text-coklat text-center font-semibold mb-2">Kategori 2</h3>
-                    <p class="text-abu text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-            </div>
 
-            <div
-                class="bg-white rounded-lg overflow-hidden shadow-card hover:shadow-cardhover hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                <div class="h-48 overflow-hidden">
-                    <img src="{{url('/upload/rumah.jpg')}}" alt="" class="w-full h-full object-cover">
-                </div>
-                <div class="p-5">
-                    <h3 class="text-xl text-coklat text-center font-semibold mb-2">Kategori 3</h3>
-                    <p class="text-abu text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-            </div>
-
-            <div
-                class="bg-white rounded-lg overflow-hidden shadow-card hover:shadow-cardhover hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                <div class="h-48 overflow-hidden">
-                    <img src="{{url('/upload/rumah.jpg')}}" alt="" class="w-full h-full object-cover">
-                </div>
-                <div class="p-5">
-                    <h3 class="text-xl text-coklat text-center font-semibold mb-2">Kategori 3</h3>
-                    <p class="text-abu text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-            </div>
-
-            <div
-                class="bg-white rounded-lg overflow-hidden shadow-card hover:shadow-cardhover hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                <div class="h-48 overflow-hidden">
-                    <img src="{{url('/upload/rumah.jpg')}}" alt="" class="w-full h-full object-cover">
-                </div>
-                <div class="p-5">
-                    <h3 class="text-xl text-coklat text-center font-semibold mb-2">Kategori 3</h3>
-                    <p class="text-abu text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-            </div>
-
-            <div
-                class="bg-white rounded-lg overflow-hidden shadow-card hover:shadow-cardhover hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                <div class="h-48 overflow-hidden">
-                    <img src="{{url('/upload/rumah.jpg')}}" alt="" class="w-full h-full object-cover">
-                </div>
-                <div class="p-5">
-                    <h3 class="text-xl text-coklat text-center font-semibold mb-2">Kategori 3</h3>
-                    <p class="text-abu text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-            </div>
         </div>
     </div>
 @endsection

@@ -57,7 +57,7 @@
         </div>
 
         <!-- Contact Form -->
-        <div class="bg-white rounded-xl shadow-lg p-10 mb-16">
+        {{-- <div class="bg-white rounded-xl shadow-lg p-10 mb-16">
             <h2 class="text-secondary text-2xl font-bold mb-8">Kirim Pesan Langsung</h2>
             <form action="#" method="POST">
                 <div class="mb-6">
@@ -107,7 +107,7 @@
                     Kirim Pesan
                 </button>
             </form>
-        </div>
+        </div> --}}
 
         <!-- Map Section -->
         <div class="h-96 mb-16 rounded-xl shadow-lg overflow-hidden">

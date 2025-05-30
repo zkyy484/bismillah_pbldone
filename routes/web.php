@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CategoryImageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Database\Events\TransactionRolledBack;
 use Illuminate\Support\Facades\Route;
@@ -17,10 +18,12 @@ use App\Http\Controllers\UserController;
 // Route::get('/kategori', [UserController::class, 'Kategori'])->name('customer.detail');
 
 // View About
-Route::get('/about_us', [UserController::class, 'showAbout'])->name('show.kategory');
+Route::get('/category', [UserController::class, 'showKategory'])->name('show.kategory');
 
 // View Contact
 Route::get('/contact', [UserController::class, 'showContact'])->name('show.contact');
+
+Route::get('/about_us', [UserController::class, 'showAboutUs'])->name('show.about_us');
 
 Route::get('/', [UserController::class, 'index'])->name('index');
 
@@ -38,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/change/password', [UserController::class, 'ChangePassword'])->name('change.password');
     Route::post('/user/passwrod/update', [UserController::class, 'PasswordUpdate'])->name('user.password.update');
     Route::get('/user/history/order', [UserController::class, 'HistoryOrder'])->name('user.history.order');
+    Route::get('/user/history/transaksi', [UserController::class, 'HistoryTransaksi'])->name('user.history.transaksi');
 
     // tampilan detail kategory
     Route::get('/kategori/{id}', [UserController::class, 'showCategory'])->name('kategori.detail');
@@ -47,8 +51,14 @@ Route::middleware('auth')->group(function () {
     // transaksi
     Route::get('/user/transaksi/{order}', [TransactionController::class, 'CreateTransaksi'])->name('user.transaksi');
     Route::post('/user/transaksi/done/{order}', [TransactionController::class, 'TransaksiStore'])->name('user.transaksi.desain');
+    Route::delete('/admin/transaksi/delete/{id}', [TransactionController::class, 'DeleteTransaksi'])->name('transaksi.delete');
 
+    
     Route::get('/user/thanks/{id}', [TransactionController::class, 'Thanks'])->name('user.thanks');
+
+    // Ulasan
+    Route::get('/user/{order}/review', [ReviewController::class, 'CreateReview'])->name('user.review');
+    Route::post('/user/review/{order}', [ReviewController::class, 'StoreReview'])->name('user.create.review');
 });
 
 
@@ -116,6 +126,13 @@ Route::middleware('admin')->group(function () {
     // AllTransaksi
     Route::controller(TransactionController::class)->group(function() {
         Route::get('/admin/all/transaksi', 'AllTransaksi')->name('transaksi');
+        Route::get('/admin/edit/transaksi/{transaction}', 'EditTransaksi')->name('admin.edit.transaksi');
+        Route::post('/admin/transactions/{transaction}/status', 'UpdateTransaksi')->name('admin.update.transaksi');
+    });
+
+    Route::controller(ReviewController::class)->group(function() {
+        Route::get('/admin/all/ulasan', 'AdminReview')->name('ulasan');
+        Route::post('/admin/approve/ulasan/{id}', 'ApproveReview')->name('admin.approve.ulasan');
     });
 });
 

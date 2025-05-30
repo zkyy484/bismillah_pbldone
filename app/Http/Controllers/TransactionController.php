@@ -11,11 +11,13 @@ class TransactionController extends Controller
     public function CreateTransaksi(order $order)
     {
         // Pastikan hanya pemesan yang dapat melihat transaksi mereka
+        $transactions = Transaction::all();
         if ($order->user_id != auth()->id()) {
             return redirect()->route('user.order')->with('error', 'Unauthorized access.');
         }
 
-        return view('customer.transaksi', compact('order'));
+
+        return view('customer.transaksi', compact('order', 'transactions'));
     }
 
     public function TransaksiStore(Request $request, order $order)
@@ -42,15 +44,71 @@ class TransactionController extends Controller
         ]);
 
         // Update status order
-        $order->update(['status' => 'pending']);
+        // $order->update(['status' => 'confirmed']);
 
         return redirect()->route('user.thanks', $transaksi->id)->with('success', 'Pembayaran berhasil dibuat. Tunggu konfirmasi admin.');
     }
 
-    public function AllTransaksi() {
+    public function AllTransaksi()
+    {
         $transactions = Transaction::with('order.user', 'order.category')->get();
         return view('admin.backend.transaksi.all_transaksi', compact('transactions'));
     }
+
+    public function EditTransaksi(Transaction $transaction)
+    {
+        return view('admin.backend.transaksi.edit_transaksi', compact('transaction'));
+    }
+
+    public function UpdateTransaksi(Transaction $transaction, Request $request)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:pending,paid,failed',
+        ]);
+
+        $transaction->update([
+            'status' => $validated['status'],
+        ]);
+
+        // Jika transaksi dinyatakan "paid", ubah juga status order menjadi "confirmed"
+        if ($validated['status'] === 'paid') {
+            $transaction->order->update([
+                'status' => 'confirmed',
+            ]);
+        }
+
+        $notification = array(
+            'message' => 'Berhasil mengubah status transaksi dan status order',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('transaksi')->with($notification);
+    }
+
+    public function DeleteTransaksi($id)
+    {
+        $transaction = Transaction::find($id);
+
+        if (!$transaction) {
+            return redirect()->back()->with([
+                'message' => 'Transaksi tidak ditemukan.',
+                'alert-type' => 'error'
+            ]);
+        }
+
+        // Jika kamu mau, bisa cek apakah transaksi ini punya file bukti pembayaran dan hapus filenya
+        if ($transaction->payment_receipt) {
+            \Storage::disk('public')->delete($transaction->payment_receipt);
+        }
+
+        $transaction->delete();
+
+        return redirect()->back()->with([
+            'message' => 'Transaksi berhasil dihapus.',
+            'alert-type' => 'success'
+        ]);
+    }
+
 
 
     // public function updateStatus(Transaction $transaction, Request $request)

@@ -58,7 +58,7 @@
                 <div class="flex items-center justify-between mb-6">
                     <div>
                         <p class="text-2xl font-bold text-blue-600 mt-4">
-                            Rp{{ number_format($category->base_price, 0, ',', '.') }}</p>
+                            Rp{{ number_format($category->base_price, 0, ',', '.') }}/m2</p>
                     </div>
                     <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Diskon 10%</span>
                 </div>

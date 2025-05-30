@@ -233,6 +233,39 @@
             });
         });
     </script>
+
+    {{-- Slideshow --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const slideshow = document.getElementById('manual-slideshow');
+            const slideImages = [
+                "{{ url('upload/slideshow/slide1.jpg') }}",
+                "{{ url('upload/slideshow/slide2.jpg') }}",
+                "{{ url('upload/slideshow/slide3.jpg') }}",
+                "{{ url('upload/slideshow/slide4.jpg') }}",
+                "{{ url('upload/slideshow/slide5.jpg') }}"
+            ];
+
+            // Create slides
+            slideImages.forEach((imgSrc, index) => {
+                const slide = document.createElement('div');
+                slide.className = `absolute inset-0 w-full h-full transition-opacity duration-1000 ${index === 0 ? 'opacity-100' :
+                    'opacity-0'}`;
+                slide.innerHTML = `<img src="${imgSrc}" alt="Slide ${index + 1}" class="w-full h-full object-cover">`;
+                slideshow.appendChild(slide);
+            });
+
+            // Simple slideshow logic
+            let currentSlide = 0;
+            const slides = slideshow.querySelectorAll('div');
+
+            setInterval(() => {
+                slides[currentSlide].classList.replace('opacity-100', 'opacity-0');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.replace('opacity-0', 'opacity-100');
+            }, 3000);
+        });
+    </script>
 </body>
 
 </html>

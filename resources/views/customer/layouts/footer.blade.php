@@ -109,8 +109,8 @@
                 </form>
                 <div class="mt-4">
                     <a href="#" class="mr-3"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="mr-3"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="mr-3"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@nazarch.studio?_t=ZS-8wfhyj3r46S&_r=1" class="mr-3"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/nazarch.studio?igsh=c3UzMmM2bHBtcnBy Ig" class="mr-3"><i class="fab fa-instagram"></i></a>
                     <a href="#" class="mr-3"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>

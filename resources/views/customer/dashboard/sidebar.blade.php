@@ -7,11 +7,11 @@
             Edit Profile
         </a>
     </div>
-
+{{-- 
     @php
     $id = Auth::user()->id;
     $profileData = App\Models\User::find($id);
-    @endphp
+    @endphp --}}
     
     <ul class="space-y-2">
         <li>
@@ -33,21 +33,15 @@
             </a>
         </li>
         <li>
-            <a href="#" class="{{Route::currentRouteName() === 'dashboard' ? 'active' : ''}} flex items-center px-4 py-3 rounded text-gray-600 hover:bg-gray-100 hover:text-coklat transition">
+            <a href="{{route('user.history.transaksi')}}" class="{{Route::currentRouteName() === 'user.history.transaksi' ? 'active' : ''}} flex items-center px-4 py-3 rounded text-gray-600 hover:bg-gray-100 hover:text-coklat transition">
                 <i class="fas fa-history w-5 mr-3 text-center"></i>
-                Riwayat Pesanan
+                Riwayat Transaksi
             </a>
         </li>
         <li>
-            <a href="#" class="flex items-center px-4 py-3 rounded text-gray-600 hover:bg-gray-100 hover:text-coklat transition">
-                <i class="fas fa-box w-5 mr-3 text-center"></i>
-                Orderan
-            </a>
-        </li>
-        <li>
-            <a href="#" class="flex items-center px-4 py-3 rounded text-gray-600 hover:bg-gray-100 hover:text-coklat transition">
-                <i class="fas fa-star w-5 mr-3 text-center"></i>
-                Ulasan
+            <a href="{{route('user.logout')}}" class="flex items-center px-4 py-3 rounded text-gray-600 hover:bg-gray-100 hover:text-coklat transition">
+                <i class="fas fa-sign-out-alt w-5 mr-3 text-center"></i>
+                Log Out
             </a>
         </li>
     </ul>

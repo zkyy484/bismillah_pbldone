@@ -33,7 +33,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($item->photo)
-                                    <img src="{{ asset($item->photo) }}" alt="Foto Kategori"
+                                    <img src="{{ (!empty($item->photo)) ? asset($item->photo) : asset('upload/rumah.jpg') }}" alt="Foto Kategori"
                                         class="w-16 h-16 object-cover rounded border border-gray-300">
                                 @else
                                     <span class="text-sm text-gray-400 italic">Tidak ada foto</span>

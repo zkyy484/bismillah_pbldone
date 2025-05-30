@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('payment_method');  // e.g. bank transfer, e-wallet, etc.
             $table->decimal('amount', 15, 2);  // Jumlah uang yang dibayar
             $table->enum('status', ['pending', 'paid', 'failed'])->default('pending');
-            $table->string('payment_receipt')->nullable();  // File bukti pembayaran (opsional)
+            $table->text('payment_receipt')->nullable();
             $table->timestamps();
         });
     }

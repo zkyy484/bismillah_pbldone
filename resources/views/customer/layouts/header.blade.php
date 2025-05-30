@@ -13,8 +13,8 @@
 
             <div class="hidden md:flex gap-12">
                 <a href="{{route('index')}}" class="text-white font-medium hover:text-cream transition-colors">Home</a>
-                <a href="" class="text-white font-medium hover:text-cream transition-colors">Categories</a>
-                <a href="#" class="text-white font-medium hover:text-cream transition-colors">About</a>
+                <a href="{{route('show.kategory')}}" class="text-white font-medium hover:text-cream transition-colors">Categories</a>
+                <a href="{{route('show.about_us')}}" class="text-white font-medium hover:text-cream transition-colors">About</a>
                 <a href="{{route('show.contact')}}" class="text-white font-medium hover:text-cream transition-colors">Contact</a>
             </div>
 

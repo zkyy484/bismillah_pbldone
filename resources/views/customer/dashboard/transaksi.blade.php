@@ -100,51 +100,69 @@
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4">Riwayat Transaksi</h2>
                 <hr class="border-a border-gray-300 mb-12">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach ($orders as $order)
+                <div class="flex flex-col gap-4">
+                    @forelse ($transactions as $transaction)
                         <div
-                            class="bg-cream rounded-lg p-4 transition duration-300 overflow-hidden transition transform duration-300 hover:scale-105">
-                            <img src="{{ asset($order->category->photo)}}" alt="Produk" class="w-full h-48 object-cover">
-                            <div class="p-4">
-                                <h3 class="text-lg font-semibold text-coklat mb-2">{{$order->category->nama_categori}}</h3>
-                                <p class="text-gray-700 mb-1"><span class="font-medium">Harga Total:</span> Rp
-                                    {{ number_format($order->price, 0, ',', '.') }}
-                                </p>
-                                <p class="text-gray-700 mb-1"><span class="font-medium">Catatan:</span>
-                                    {{ $order->notes ?? '-' }}</p>
-                                <p class="text-gray-700"><span class="font-medium">Status:</span>
-                                    <span class="inline-block px-2 py-1 text-sm rounded 
-                        @if($order->status == 'completed') bg-green-100 text-green-800 
-                        @elseif($order->status == 'confirmed') bg-yellow-100 text-yellow-800 
-                            @else bg-red-100 text-red-800 
-                        @endif">
-                                        {{ ucfirst($order->status) }}
-                                    </span>
-                                </p>
+                            class="flex flex-col md:flex-row bg-cream rounded-lg shadow p-4 gap-6 hover:shadow-cardhover transition">
+                            <!-- Gambar bukti pembayaran -->
+                            <div class="w-full md:w-1/4 h-48">
+                                @if($transaction->payment_receipt)
+                                    <img src="{{ asset('storage/' . $transaction->payment_receipt) }}" alt="Bukti Pembayaran"
+                                        class="w-full h-full object-cover rounded-lg shadow">
+                                @else
+                                    <div
+                                        class="w-full h-full flex items-center justify-center bg-gray-200 rounded-lg text-gray-500">
+                                        Tidak ada bukti
+                                    </div>
+                                @endif
+                            </div>
 
-                                {{-- Tombol Dinamis --}}
+                            <!-- Informasi transaksi -->
+                            <div class="flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-xl font-bold text-coklat mb-2">Order ID: {{ $transaction->order->id }}
+                                    </h3>
+                                    <p class="text-gray-800 mb-1"><span class="font-semibold">Nama Produk:</span>
+                                        {{ $transaction->order->category->nama_categori }}
+                                    </p>
+                                    <p class="text-gray-800 mb-1"><span class="font-semibold">Metode Pembayaran:</span>
+                                        {{ $transaction->payment_method }}
+                                    </p>
+                                    <p class="text-gray-800 mb-1"><span class="font-semibold">Harga Total:</span> Rp
+                                        {{ number_format($transaction->amount, 0, ',', '.') }}
+                                    </p>
+                                    <p class="text-gray-800"><span class="font-semibold">Status:</span>
+                                        <span class="inline-block px-2 py-1 text-sm rounded 
+                                @if($transaction->status === 'pending') bg-yellow-400 text-white 
+                                @elseif($transaction->status === 'paid') bg-green-500 text-white 
+                                @else bg-gray-400 text-white @endif">
+                                            {{ ucfirst($transaction->status) }}
+                                        </span>
+                                    </p>
+                                </div>
+
+                                {{-- Tombol aksi (opsional) --}}
                                 <div class="mt-4">
-                                    @if($order->status === 'pending')
-                                        <a href="{{ route('user.transaksi', $order->id) }}"
-                                            class="inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                                    @if($transaction->status === 'confirmed')
+                                        <a href="{{ route('customer.pay', $transaction->id) }}"
+                                            class="inline-block bg-primary text-white px-4 py-2 rounded hover:bg-primaryHover">
                                             Bayar Sekarang
                                         </a>
-                                    @elseif($order->status === 'completed')
-                                        <a href=""
-                                            class="inline-block w-full text-center bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                                    @elseif($transaction->status === 'complete')
+                                        <a href="{{ route('customer.review', $transaction->id) }}"
+                                            class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                                             Beri Ulasan
                                         </a>
                                     @endif
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-
+                    @empty
+                        <p class="text-gray-600">Belum ada transaksi.</p>
+                    @endforelse
                 </div>
 
-                @if($orders->isEmpty())
-                    <p class="text-gray-500 mt-6">Belum ada riwayat pemesanan.</p>
-                @endif
+
             </div>
         </div>
     </main>

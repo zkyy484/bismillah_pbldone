@@ -19,11 +19,13 @@ class order extends Model
         'notes'
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
@@ -31,4 +33,10 @@ class order extends Model
     {
         return $this->hasOne(Transaction::class);
     }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
+
 }

@@ -19,6 +19,7 @@ export default {
                 cream: "#F2F0EB",
                 abu: "#333",
                 putih: "#fff",
+                kuning: "#FFF6CC",
                 hitam: "#000000"
             }
         },

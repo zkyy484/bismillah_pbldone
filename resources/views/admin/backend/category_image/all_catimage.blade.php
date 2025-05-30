@@ -26,7 +26,7 @@
                     @foreach ($cat_image as $key => $item)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $key + 1 }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $item->category_id }}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $item->category->nama_categori }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($item->image_path)
