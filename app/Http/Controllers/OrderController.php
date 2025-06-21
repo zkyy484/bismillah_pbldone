@@ -61,7 +61,12 @@ class OrderController extends Controller
 
         $order->update($validated);
 
-        return redirect()->route('all.order')->with('success', 'Status pemesanan berhasil diperbarui.');
+        $notification = array(
+            'message' => 'Berhasil menambahkan mengubah status pemesanan',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.order')->with($notification);
     }
 
     public function DeleteOrder($id)

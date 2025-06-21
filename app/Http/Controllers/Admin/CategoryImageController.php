@@ -75,7 +75,9 @@ class CategoryImageController extends Controller
             $manager = new ImageManager(new Driver());
 
             $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+
             $save_path = public_path('upload/category_images/' . $name_gen);
+            
 
             $img = $manager->read($image);
             $img->resize(1600, 900, function ($constraint) {

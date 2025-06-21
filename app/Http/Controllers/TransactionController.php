@@ -20,34 +20,36 @@ class TransactionController extends Controller
         return view('customer.transaksi', compact('order', 'transactions'));
     }
 
-    public function TransaksiStore(Request $request, order $order)
-    {
-        $validated = $request->validate([
-            'payment_method' => 'required|string',
-            'amount' => 'required|numeric',
-            'payment_receipt' => 'nullable|file|mimes:jpg,png,pdf|max:2048',
-        ]);
+    public function TransaksiStore(Request $request, Order $order)
+{
+    $validated = $request->validate([
+        'payment_method' => 'required|string',
+        'amount' => 'required|numeric',
+        'payment_receipt' => 'required|file|mimes:jpg,png,pdf|max:5120',
+    ]);
 
-        // Simpan bukti pembayaran (jika ada)
-        $receipt_path = null;
-        if ($request->hasFile('payment_receipt')) {
-            $receipt_path = $request->file('payment_receipt')->store('upload/image_transaksi', 'public');
-        }
-
-        // Buat transaksi
-        $transaksi = Transaction::create([
-            'order_id' => $order->id,
-            'payment_method' => $validated['payment_method'],
-            'amount' => $validated['amount'],
-            'status' => 'pending',
-            'payment_receipt' => $receipt_path,
-        ]);
-
-        // Update status order
-        // $order->update(['status' => 'confirmed']);
-
-        return redirect()->route('user.thanks', $transaksi->id)->with('success', 'Pembayaran berhasil dibuat. Tunggu konfirmasi admin.');
+    // Simpan bukti pembayaran ke folder public/upload/image_transaksi
+    $receipt_path = null;
+    if ($request->hasFile('payment_receipt')) {
+        $file = $request->file('payment_receipt');
+        $filename = time() . '_' . $file->getClientOriginalName(); // nama file unik
+        $file->move(public_path('upload/image_transaksi'), $filename);
+        $receipt_path = 'upload/image_transaksi/' . $filename;
     }
+
+    // Buat transaksi
+    $transaksi = Transaction::create([
+        'order_id' => $order->id,
+        'payment_method' => $validated['payment_method'],
+        'amount' => $validated['amount'],
+        'status' => 'pending',
+        'payment_receipt' => $receipt_path,
+    ]);
+
+    return redirect()->route('user.thanks', $transaksi->id)->with('success', 'Pembayaran berhasil dibuat. Tunggu konfirmasi admin.');
+}
+
+
 
     public function AllTransaksi()
     {
@@ -96,42 +98,16 @@ class TransactionController extends Controller
             ]);
         }
 
-        // Jika kamu mau, bisa cek apakah transaksi ini punya file bukti pembayaran dan hapus filenya
-        if ($transaction->payment_receipt) {
-            \Storage::disk('public')->delete($transaction->payment_receipt);
-        }
 
         $transaction->delete();
 
-        return redirect()->back()->with([
-            'message' => 'Transaksi berhasil dihapus.',
+        $notification = array(
+            'message' => 'Berhasil menghapus transaksi',
             'alert-type' => 'success'
-        ]);
+        );
+
+        return redirect()->back()->with($notification);
     }
-
-
-
-    // public function updateStatus(Transaction $transaction, Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'status' => 'required|in:paid,failed',
-    //     ]);
-
-    //     // Update status transaksi
-    //     $transaction->update($validated);
-
-    //     // Update status order jika pembayaran sudah terkonfirmasi
-    //     if ($transaction->status == 'paid') {
-    //         $transaction->order->update(['status' => 'confirmed']);
-    //     }
-
-    //     return back()->with('success', 'Status transaksi berhasil diperbarui.');
-    // }
-
-    // public function show(order $order)
-    // {
-    //     return view('transactions.show', compact('order'));
-    // }
 
     public function Thanks($id)
     {

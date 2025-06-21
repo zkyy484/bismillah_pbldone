@@ -14,89 +14,92 @@
 
         <div class="bg-white rounded-lg shadow overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+                <thead class="bg-cokelat">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Order
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama
-                            Pemesan</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama
-                            Produk</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Metode
-                            Pembayaran</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Foto
-                            Pembayaran</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
-                        <!-- Kolom aksi -->
+                        <th class="px-6 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">Invoice</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">Nama Pemesan</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">Nama Produk</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">Metode Pembayaran</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">Jumlah</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">Foto Pembayaran</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($transactions as $transaction)
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transaction->id }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transaction->order_id }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transaction->order->user->name}}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $transaction->order->category->nama_categori}}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ ucfirst($transaction->payment_method) }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp
-                                {{ number_format($transaction->amount, 0, ',', '.') }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#00{{ $transaction->order_id }}NAZARCH</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transaction->order->user->name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transaction->order->category->nama_categori }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ ucfirst($transaction->payment_method) }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp {{ number_format($transaction->amount, 0, ',', '.') }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
                                 <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold
-                            @if($transaction->status == 'success') bg-green-100 text-green-700
-                            @elseif($transaction->status == 'pending') bg-yellow-100 text-yellow-700
-                                @else bg-red-100 text-red-700
-                            @endif
-                        ">
+                                    @if($transaction->status == 'success') bg-green-100 text-green-700
+                                    @elseif($transaction->status == 'pending') bg-yellow-100 text-yellow-700
+                                    @else bg-red-100 text-red-700
+                                    @endif
+                                ">
                                     {{ ucfirst($transaction->status) }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
                                 @if($transaction->payment_receipt)
-                                    <a href="{{ asset('storage/' . $transaction->payment_receipt) }}" target="_blank">
-                                        <img src="{{ asset('storage/' . $transaction->payment_receipt) }}" alt="Bukti Pembayaran"
+                                    <a href="{{ asset($transaction->payment_receipt) }}" target="_blank">
+                                        <img src="{{ asset($transaction->payment_receipt) }}" alt="Bukti Pembayaran"
                                             class="w-16 h-16 object-cover rounded">
                                     </a>
                                 @else
                                     <span class="text-gray-400 italic">Belum ada</span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
-                                <!-- Tombol Edit -->
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
                                 <a href="{{ route('admin.edit.transaksi', $transaction->id) }}"
-                                    class="inline-block px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-xs">
-                                    Edit
+                                    class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded mr-2 inline-flex items-center text-sm">
+                                    <i class="fas fa-edit mr-1"></i> Edit
                                 </a>
 
-                                <!-- Form Hapus -->
-                                <form action="{{ route('transaksi.delete', $transaction->id) }}" method="POST"
-                                    class="inline-block" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                <form id="delete-form-{{ $transaction->id }}" action="{{ route('transaksi.delete', $transaction->id) }}" method="POST" style="display: inline;">
                                     @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-xs">
-                                        Hapus
+                                    <button type="button"
+                                        onclick="confirmDelete({{ $transaction->id }})"
+                                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded inline-flex items-center text-sm">
+                                        <i class="fas fa-trash mr-1"></i> Hapus
                                     </button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
-
             </table>
         </div>
     </div>
 @endsection
 
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Hapus Transaksi?',
+                text: "Transaksi ini akan dihapus secara permanen dari halaman transaksi!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e3342f',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire('Dibatalkan', 'Transaksi tidak jadi dihapus.', 'info');
+                }
+            });
+        }
+
         @if(Session::has('message'))
             var type = "{{ Session::get('alert-type', 'info') }}";
             switch (type) {

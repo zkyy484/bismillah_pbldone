@@ -29,7 +29,7 @@
                 </button>
                 <ul id="dropdownMenu"
                     class="absolute right-0 top-14 bg-white shadow-lg rounded-lg text-sm hidden min-w-[140px] z-50">
-                    <li><a class="block px-4 py-2 hover:bg-gray-100" href="{{route('dashboard')}}">Dashboard</a></li>
+                    <li><a class="block px-4 py-2 hover:bg-gray-100" href="{{route('index')}}">Halaman Utama</a></li>
                     {{-- <li><a class="block px-4 py-2 hover:bg-gray-100" href="#">Keranjang</a></li> --}}
                     <li><a class="block px-4 py-2 hover:bg-gray-100" href="{{ route('user.logout') }}">Log Out</a></li>
                 </ul>

@@ -9,21 +9,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    {{--
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#4CAF50',
-                        primaryHover: '#45a049',
-                    }
-                }
-            }
-        }
-    </script> --}}
-
     <style>
+        /* Scrollbar vertikal */
+        .overflow-y-auto::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+            background-color: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        .overflow-y-auto::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+
         .overlay {
             transform: translateY(100%);
             transition: transform 0.4s ease;
@@ -39,19 +39,6 @@
 
         .slide {
             transition: opacity 1s ease-in-out;
-        }
-
-        .overlay {
-            transform: translateY(100%);
-            transition: transform 0.4s ease;
-        }
-
-        .item:hover .overlay {
-            transform: translateY(0%);
-        }
-
-        .item:hover img {
-            transform: scale(1.05);
         }
     </style>
     <script>
@@ -98,75 +85,77 @@
             <!-- Riwayat Pemesanan -->
             <div class="flex-grow bg-white rounded-lg shadow-none p-8">
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4">Riwayat Transaksi</h2>
-                <hr class="border-a border-gray-300 mb-12">
+                <hr class="border-a border-gray-300 mb-8">
 
-                <div class="flex flex-col gap-4">
-                    @forelse ($transactions as $transaction)
-                        <div
-                            class="flex flex-col md:flex-row bg-cream rounded-lg shadow p-4 gap-6 hover:shadow-cardhover transition">
-                            <!-- Gambar bukti pembayaran -->
-                            <div class="w-full md:w-1/4 h-48">
-                                @if($transaction->payment_receipt)
-                                    <img src="{{ asset('storage/' . $transaction->payment_receipt) }}" alt="Bukti Pembayaran"
-                                        class="w-full h-full object-cover rounded-lg shadow">
-                                @else
-                                    <div
-                                        class="w-full h-full flex items-center justify-center bg-gray-200 rounded-lg text-gray-500">
-                                        Tidak ada bukti
+                <!-- Container utama dengan batasan tinggi -->
+                <div class="max-h-[70vh] flex flex-col"> <!-- Batasi tinggi maksimal -->
+                    <!-- Container scroll dengan flex-1 -->
+                    <div class="flex-1 overflow-y-auto pr-2"> <!-- Gunakan flex-1 untuk mengisi ruang tersedia -->
+                        <div class="flex flex-col gap-4"> <!-- Container untuk card-card -->
+                            @forelse ($transactions as $transaction)
+                                <div class="flex flex-col md:flex-row bg-cream rounded-lg shadow p-4 gap-6 hover:scale-[1.005] transition">
+                                    <!-- Gambar bukti pembayaran -->
+                                    <div class="w-full md:w-1/4 h-48">
+                                        @if($transaction->payment_receipt)
+                                            <img src="{{ asset($transaction->payment_receipt) }}" alt="Bukti Pembayaran"
+                                                class="w-full h-full object-cover rounded-lg shadow">
+                                        @else
+                                            <div
+                                                class="w-full h-full flex items-center justify-center bg-gray-200 rounded-lg text-gray-500">
+                                                Tidak ada bukti
+                                            </div>
+                                        @endif
                                     </div>
-                                @endif
-                            </div>
 
-                            <!-- Informasi transaksi -->
-                            <div class="flex-1 flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-xl font-bold text-coklat mb-2">Order ID: {{ $transaction->order->id }}
-                                    </h3>
-                                    <p class="text-gray-800 mb-1"><span class="font-semibold">Nama Produk:</span>
-                                        {{ $transaction->order->category->nama_categori }}
-                                    </p>
-                                    <p class="text-gray-800 mb-1"><span class="font-semibold">Metode Pembayaran:</span>
-                                        {{ $transaction->payment_method }}
-                                    </p>
-                                    <p class="text-gray-800 mb-1"><span class="font-semibold">Harga Total:</span> Rp
-                                        {{ number_format($transaction->amount, 0, ',', '.') }}
-                                    </p>
-                                    <p class="text-gray-800"><span class="font-semibold">Status:</span>
-                                        <span class="inline-block px-2 py-1 text-sm rounded 
-                                @if($transaction->status === 'pending') bg-yellow-400 text-white 
-                                @elseif($transaction->status === 'paid') bg-green-500 text-white 
-                                @else bg-gray-400 text-white @endif">
-                                            {{ ucfirst($transaction->status) }}
-                                        </span>
-                                    </p>
-                                </div>
+                                    <!-- Informasi transaksi -->
+                                    <div class="flex-1 flex flex-col justify-between">
+                                        <div>
+                                            <h3 class="text-xl font-bold text-coklat mb-2">Invoice: #00{{ $transaction->order->id }}NAZARCH
+                                            </h3>
+                                            <p class="text-gray-800 mb-1"><span class="font-semibold">Nama Produk:</span>
+                                                {{ $transaction->order->category->nama_categori }}
+                                            </p>
+                                            <p class="text-gray-800 mb-1"><span class="font-semibold">Metode Pembayaran:</span>
+                                                {{ $transaction->payment_method }}
+                                            </p>
+                                            <p class="text-gray-800 mb-1"><span class="font-semibold">Harga Total:</span> Rp
+                                                {{ number_format($transaction->amount, 0, ',', '.') }}
+                                            </p>
+                                            <p class="text-gray-800"><span class="font-semibold">Status:</span>
+                                                <span class="inline-block px-2 py-1 text-sm rounded 
+                                        @if($transaction->status === 'pending') bg-yellow-400 text-white 
+                                        @elseif($transaction->status === 'paid') bg-green-500 text-white 
+                                        @else bg-gray-400 text-white @endif">
+                                                    {{ ucfirst($transaction->status) }}
+                                                </span>
+                                            </p>
+                                        </div>
 
-                                {{-- Tombol aksi (opsional) --}}
-                                <div class="mt-4">
-                                    @if($transaction->status === 'confirmed')
-                                        <a href="{{ route('customer.pay', $transaction->id) }}"
-                                            class="inline-block bg-primary text-white px-4 py-2 rounded hover:bg-primaryHover">
-                                            Bayar Sekarang
-                                        </a>
-                                    @elseif($transaction->status === 'complete')
-                                        <a href="{{ route('customer.review', $transaction->id) }}"
-                                            class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                            Beri Ulasan
-                                        </a>
-                                    @endif
+                                        {{-- Tombol aksi (opsional) --}}
+                                        <div class="mt-4">
+                                            @if($transaction->status === 'confirmed')
+                                                <a href="{{ route('customer.pay', $transaction->id) }}"
+                                                    class="inline-block bg-primary text-white px-4 py-2 rounded hover:bg-primaryHover">
+                                                    Bayar Sekarang
+                                                </a>
+                                            @elseif($transaction->status === 'complete')
+                                                <a href="{{ route('customer.review', $transaction->id) }}"
+                                                    class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                                    Beri Ulasan
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            @empty
+                                <p class="text-gray-600">Belum ada transaksi.</p>
+                            @endforelse
                         </div>
-                    @empty
-                        <p class="text-gray-600">Belum ada transaksi.</p>
-                    @endforelse
+                    </div>
                 </div>
-
-
             </div>
         </div>
     </main>
-
 
     <!-- Footer -->
     @include('customer.dashboard.footer')
@@ -237,7 +226,6 @@
 
     {{-- message --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
 
     <script>
         // Preview gambar saat dipilih

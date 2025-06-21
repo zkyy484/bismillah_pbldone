@@ -3,47 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Elegant</title>
+    <title>Login</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
         
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: #F2F0EB;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
         
         .login-container {
             background: white;
             border-radius: 12px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 400px;
             padding: 40px;
             text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.03);
         }
         
         .login-header {
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
         
         .login-header h1 {
-            color: #333;
-            font-size: 28px;
-            font-weight: 700; /* Dipertebal dari 600 */
-            margin-bottom: 10px;
+            color: #40342A;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
         
         .login-header p {
             color: #777;
             font-size: 14px;
-            font-weight: 500; /* Ditambahkan untuk mempertebal */
+            font-weight: 400;
+            line-height: 1.5;
         }
         
         .input-group {
@@ -53,86 +59,99 @@
         
         .input-group label {
             display: block;
-            color: #555;
+            color: #40342A;
             font-size: 14px;
             margin-bottom: 8px;
-            font-weight: 600; /* Dipertebal dari 500 */
+            font-weight: 500;
         }
         
         .input-group input {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
+            padding: 12px 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-            font-weight: 500; /* Ditambahkan untuk teks input */
+            font-size: 15px;
+            transition: all 0.2s;
+            background-color: white;
         }
         
         .input-group input:focus {
-            border-color: #4a90e2;
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+            border-color: #40342A;
             outline: none;
+            box-shadow: 0 0 0 2px rgba(64, 52, 42, 0.1);
         }
         
         .remember-forgot {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            font-size: 13px;
+            margin-bottom: 24px;
+            font-size: 14px;
         }
         
         .remember-me {
             display: flex;
             align-items: center;
+            gap: 8px;
         }
         
         .remember-me input {
-            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+            accent-color: #40342A;
         }
         
         .remember-me label {
-            font-weight: 500; /* Ditambahkan untuk mempertebal */
-            color: #555; /* Ditambahkan untuk konsistensi */
+            color: #40342A;
+            font-weight: 400;
         }
         
         .forgot-password a {
-            color: #4a90e2;
+            color: #40342A;
             text-decoration: none;
-            font-weight: 600; /* Dipertebal */
+            font-weight: 500;
         }
         
         .login-button {
             width: 100%;
-            padding: 12px;
-            background: linear-gradient(to right, #4a90e2, #63b3ed);
+            padding: 14px;
+            background: #40342A;
             border: none;
             border-radius: 8px;
             color: white;
-            font-size: 16px;
-            font-weight: 700; /* Dipertebal dari 600 */
+            font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
-            letter-spacing: 0.5px; /* Ditambahkan untuk memperjelas teks */
+            transition: background 0.2s;
+            margin-bottom: 24px;
         }
         
         .login-button:hover {
-            background: linear-gradient(to right, #3a7bc8, #4a90e2);
-            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+            background: #332a22;
         }
         
         .signup-link {
-            margin-top: 25px;
             font-size: 14px;
             color: #777;
-            font-weight: 500; /* Ditambahkan untuk mempertebal */
         }
         
         .signup-link a {
-            color: #4a90e2;
+            color: #40342A;
             text-decoration: none;
-            font-weight: 600; /* Dipertebal dari 500 */
+            font-weight: 500;
+        }
+        
+        /* Error messages */
+        .login-container li {
+            list-style: none;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: rgba(64, 52, 42, 0.05);
+            color: #40342A;
+            border-left: 3px solid #40342A;
+            text-align: left;
         }
     </style>
 </head>
@@ -140,7 +159,7 @@
     <div class="login-container">
         <div class="login-header">
             <h1>Welcome Back</h1>
-            <p>Please enter your credentials to login</p>
+            <p>Sign in to access your account</p>
         </div>
 
         @if ($errors->any())
@@ -157,10 +176,10 @@
             <li>{{ Session::get('success')}}</li>
         @endif
         
-        <form method="POST" action="{{route('login')}}" >
+        <form method="POST" action="{{route('login')}}">
             @csrf
             <div class="input-group">
-                <label for="email">Email Address</label>
+                <label for="email">Email</label>
                 <input type="email" name="email" id="email" placeholder="Enter your email">
             </div>
             
@@ -171,7 +190,7 @@
             
             <div class="remember-forgot">
                 <div class="remember-me">
-                    <input type="checkbox" id="remember">
+                    <input type="checkbox" id="remember" name="remember">
                     <label for="remember">Remember me</label>
                 </div>
                 <div class="forgot-password">
@@ -179,10 +198,10 @@
                 </div>
             </div>
             
-            <button type="submit" class="login-button">LOGIN</button>
+            <button type="submit" class="login-button">Sign In</button>
             
             <div class="signup-link">
-                Don't have an account? <a href="{{route('register')}}">Sign up now</a>
+                Don't have an account? <a href="{{route('register')}}">Sign up</a>
             </div>
         </form>
     </div>

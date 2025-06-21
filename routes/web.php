@@ -6,25 +6,16 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TransactionController;
+use App\Models\User;
 use Illuminate\Database\Events\TransactionRolledBack;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 
-// Route::get('/', function () {
-//     return view('customer.home');
-// });
 
-// Route::get('/kategori', [UserController::class, 'Kategori'])->name('customer.detail');
-
-// View About
 Route::get('/category', [UserController::class, 'showKategory'])->name('show.kategory');
-
-// View Contact
 Route::get('/contact', [UserController::class, 'showContact'])->name('show.contact');
-
 Route::get('/about_us', [UserController::class, 'showAboutUs'])->name('show.about_us');
-
 Route::get('/', [UserController::class, 'index'])->name('index');
 
 
@@ -52,8 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/transaksi/{order}', [TransactionController::class, 'CreateTransaksi'])->name('user.transaksi');
     Route::post('/user/transaksi/done/{order}', [TransactionController::class, 'TransaksiStore'])->name('user.transaksi.desain');
     Route::delete('/admin/transaksi/delete/{id}', [TransactionController::class, 'DeleteTransaksi'])->name('transaksi.delete');
-
-    
     Route::get('/user/thanks/{id}', [TransactionController::class, 'Thanks'])->name('user.thanks');
 
     // Ulasan
@@ -133,41 +122,10 @@ Route::middleware('admin')->group(function () {
     Route::controller(ReviewController::class)->group(function() {
         Route::get('/admin/all/ulasan', 'AdminReview')->name('ulasan');
         Route::post('/admin/approve/ulasan/{id}', 'ApproveReview')->name('admin.approve.ulasan');
+        Route::patch('/admin/reviews/{review}/unapprove',  'unapprove')->name('admin.unapprove.ulasan');
+
     });
 });
 
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('order/create', [OrderController::class, 'create'])->name('order.create');
-//     Route::post('order', [OrderController::class, 'store'])->name('order.store');
-// });
-
-// Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
-//     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
-//     Route::get('orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
-//     Route::put('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
-//     Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
-// });
 
 
-// Route::middleware(['auth'])->group(function () {
-//     // Form & simpan order
-//     Route::get('/order/create', [OrderController::class, 'create'])->name('order.create');
-//     Route::post('/order', [OrderController::class, 'store'])->name('order.store');
-
-//     // Form & simpan transaksi (pembayaran)
-//     Route::get('/payment/{order}', [TransactionController::class, 'create'])->name('payment.create');
-//     Route::post('/payment/{order}', [TransactionController::class, 'store'])->name('payment.store');
-
-//     // Halaman terima kasih
-//     Route::get('/order/thankyou', [OrderController::class, 'thankYou'])->name('order.thankyou');
-// });
-
-
-
-// transaksi admin
-// Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
-//     Route::get('/transactions', [TransactionAdminController::class, 'index'])->name('transactions.index');
-//     Route::get('/transactions/{transaction}', [TransactionAdminController::class, 'show'])->name('transactions.show');
-//     Route::post('/transactions/{transaction}/confirm', [TransactionAdminController::class, 'confirm'])->name('transactions.confirm');
-//     Route::post('/transactions/{transaction}/reject', [TransactionAdminController::class, 'reject'])->name('transactions.reject');
-// });

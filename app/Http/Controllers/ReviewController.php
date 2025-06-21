@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
+
+use App\Models\order;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    public function CreateReview(Order $order)
+    public function CreateReview(order $order)
     {
         if ($order->user_id !== auth()->id()) {
             abort(403);
@@ -73,5 +74,17 @@ class ReviewController extends Controller
 
         return redirect()->back()->with($notification);
     }
+
+    public function unapprove(Review $review)
+    {
+        $review->is_approved = false;
+        $review->save();
+
+        return redirect()->back()->with([
+            'message' => 'Persetujuan ulasan dibatalkan.',
+            'alert-type' => 'success',
+        ]);
+    }
+
 
 }

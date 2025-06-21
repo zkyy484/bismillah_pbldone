@@ -1,202 +1,148 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Dashboard Overview')
+
 @section('content')
-    <div class="container mx-auto">
-        <h2 class="text-2xl font-semibold mb-6">Dashboard</h2>
+    <div class="space-y-8">
+        <div class="flex justify-between items-center mb-10 mt-4">
+            <h1 class="text-2xl font-bold text-gray-800">DASHBOARD UTAMA</h1>
+        </div>
 
-        <!-- Cards Section -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <!-- Total Produk -->
-            <div class="bg-white rounded-lg shadow p-6">
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <!-- Total Desain -->
+            <div class="bg-putih rounded-xl shadow-md p-6 border border-abu/10">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-gray-500">Total Produk</p>
-                        <p class="text-2xl font-bold">120</p>
+                        <p class="text-abu/70">Desain Rumah</p>
+                        <h3 class="text-2xl font-bold text-cokelat">{{ $totalDesain }}</h3>
                     </div>
-                    <div class="bg-blue-100 p-3 rounded-full">
-                        <i class="fas fa-box text-blue-500"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Total Kategori -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-gray-500">Total Kategori</p>
-                        <p class="text-2xl font-bold">15</p>
-                    </div>
-                    <div class="bg-green-100 p-3 rounded-full">
-                        <i class="fas fa-tags text-green-500"></i>
+                    <div class="bg-kuning p-3 rounded-full">
+                        <i class="fas fa-drafting-compass text-cokelat text-lg"></i>
                     </div>
                 </div>
             </div>
 
             <!-- Total Pesanan -->
-            <div class="bg-white rounded-lg shadow p-6">
+            <div class="bg-putih rounded-xl shadow-md p-6 border border-abu/10">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-gray-500">Total Pesanan</p>
-                        <p class="text-2xl font-bold">56</p>
+                        <p class="text-abu/70">Pesanan</p>
+                        <h3 class="text-2xl font-bold text-cokelat">{{ $totalPesanan }}</h3>
                     </div>
-                    <div class="bg-yellow-100 p-3 rounded-full">
-                        <i class="fas fa-file-invoice text-yellow-500"></i>
+                    <div class="bg-kuning p-3 rounded-full">
+                        <i class="fas fa-file-alt text-cokelat text-lg"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Transaksi -->
+            <div class="bg-putih rounded-xl shadow-md p-6 border border-abu/10">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-abu/70">Transaksi</p>
+                        <h3 class="text-2xl font-bold text-cokelat">{{ $totalTransaksi }}</h3>
+                    </div>
+                    <div class="bg-kuning p-3 rounded-full">
+                        <i class="fas fa-credit-card text-cokelat text-lg"></i>
                     </div>
                 </div>
             </div>
 
             <!-- Total Ulasan -->
-            <div class="bg-white rounded-lg shadow p-6">
+            <div class="bg-putih rounded-xl shadow-md p-6 border border-abu/10">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-gray-500">Total Ulasan</p>
-                        <p class="text-2xl font-bold">42</p>
+                        <p class="text-abu/70">Ulasan</p>
+                        <h3 class="text-2xl font-bold text-cokelat">{{ $totalUlasan }}</h3>
                     </div>
-                    <div class="bg-purple-100 p-3 rounded-full">
-                        <i class="fas fa-star text-purple-500"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Last Order & List Product Section -->
-        <div class="bg-white rounded-lg shadow p-6 mb-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Last Order -->
-                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                    <h3 class="text-lg font-semibold mb-4">Last Order</h3>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Member</th>
-                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
-                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Tanggal</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-4 py-3 font-medium text-gray-900">Lorem Ipsum</td>
-                                    <td class="px-4 py-3 text-gray-500">Micronolis</td>
-                                    <td class="px-4 py-3 text-gray-500">23 March 2025</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 font-medium text-gray-900">Lorem Ipsum</td>
-                                    <td class="px-4 py-3 text-gray-500">Kentampercer</td>
-                                    <td class="px-4 py-3 text-gray-500">23 March 2025</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 font-medium text-gray-900">Lorem Ipsum</td>
-                                    <td class="px-4 py-3 text-gray-500">Moslem Closiris</td>
-                                    <td class="px-4 py-3 text-gray-500">23 March 2025</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- List Product -->
-                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                    <h3 class="text-lg font-semibold mb-4">List Product</h3>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name Produk</th>
-                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Kategori</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-4 py-3 text-gray-900">Nama Produk</td>
-                                    <td class="px-4 py-3 text-gray-500">Kategori</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-gray-900">Nama Produk</td>
-                                    <td class="px-4 py-3 text-gray-500">Kategori</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="bg-kuning p-3 rounded-full">
+                        <i class="fas fa-comments text-cokelat text-lg"></i>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Ulasan dan Rating Section -->
-        <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold mb-4">Ulasan dan Rating</h3>
+        <!-- Management Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-putih rounded-xl shadow-md p-5 border border-abu/10 flex flex-col justify-between">
+                <div>
+                    <h4 class="text-lg font-semibold text-cokelat mb-2">Manajemen Desain</h4>
+                    <p class="text-abu text-sm mb-4">Kelola desain rumah yang tersedia.</p>
+                </div>
+                <a href="{{ route('all.category') }}"
+                    class="mt-auto text-sm bg-cokelat text-putih px-4 py-2 rounded hover:bg-opacity-90 transition">Kelola
+                    Desain</a>
+            </div>
+
+            <div class="bg-putih rounded-xl shadow-md p-5 border border-abu/10 flex flex-col justify-between">
+                <div>
+                    <h4 class="text-lg font-semibold text-cokelat mb-2">Manajemen Pesanan</h4>
+                    <p class="text-abu text-sm mb-4">Pantau dan proses pesanan pelanggan.</p>
+                </div>
+                <a href="{{ route('all.order') }}"
+                    class="mt-auto text-sm bg-cokelat text-putih px-4 py-2 rounded hover:bg-opacity-90 transition">Kelola
+                    Pesanan</a>
+            </div>
+
+            <div class="bg-putih rounded-xl shadow-md p-5 border border-abu/10 flex flex-col justify-between">
+                <div>
+                    <h4 class="text-lg font-semibold text-cokelat mb-2">Manajemen Transaksi</h4>
+                    <p class="text-abu text-sm mb-4">Verifikasi dan kelola transaksi pembayaran.</p>
+                </div>
+                <a href="{{ route('transaksi') }}"
+                    class="mt-auto text-sm bg-cokelat text-putih px-4 py-2 rounded hover:bg-opacity-90 transition">Kelola
+                    Transaksi</a>
+            </div>
+
+            <div class="bg-putih rounded-xl shadow-md p-5 border border-abu/10 flex flex-col justify-between">
+                <div>
+                    <h4 class="text-lg font-semibold text-cokelat mb-2">Manajemen Ulasan</h4>
+                    <p class="text-abu text-sm mb-4">Lihat dan moderasi ulasan pelanggan.</p>
+                </div>
+                <a href="{{ route('ulasan') }}"
+                    class="mt-auto text-sm bg-cokelat text-putih px-4 py-2 rounded hover:bg-opacity-90 transition">Kelola
+                    Ulasan</a>
+            </div>
+        </div>
+
+        <!-- Recent Activities -->
+        <div class="bg-putih rounded-xl shadow-md p-6 border border-abu/10">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-semibold text-cokelat">Aktivitas Terbaru</h3>
+                <a href="" class="text-sm text-cokelat hover:underline">Lihat Semua</a>
+            </div>
+
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
+                <table class="min-w-full divide-y divide-abu/10 text-sm">
+                    <thead class="bg-abu/5">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Comment</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rating</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal</th>
+                            <th class="px-6 py-3 text-left font-medium text-abu uppercase">ID</th>
+                            <th class="px-6 py-3 text-left font-medium text-abu uppercase">Aktivitas</th>
+                            <th class="px-6 py-3 text-left font-medium text-abu uppercase">Waktu</th>
+                            <th class="px-6 py-3 text-left font-medium text-abu uppercase">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr>
-                            <td class="px-6 py-4">Comment</td>
-                            <td class="px-6 py-4">
-                                <div class="flex text-yellow-400">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Published</span>
-                            </td>
-                            <td class="px-6 py-4">23 March 2025</td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4">Comment</td>
-                            <td class="px-6 py-4">
-                                <div class="flex text-yellow-400">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Pending</span>
-                            </td>
-                            <td class="px-6 py-4">22 March 2025</td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4">Comment</td>
-                            <td class="px-6 py-4">
-                                <div class="flex text-yellow-400">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Published</span>
-                            </td>
-                            <td class="px-6 py-4">21 March 2025</td>
-                        </tr>
+                    <tbody class="bg-putih divide-y divide-abu/10">
+                        @foreach ($latestActivities as $activity)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-abu">{{ $activity->id }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-abu">{{ $activity->activity }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-abu">
+                                    {{ $activity->created_at->format('d M Y, H:i') }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-abu">
+                                    <a href="{{ $activity->link }}"
+                                        class="inline-block px-4 py-2 bg-cokelat text-white text-sm font-semibold rounded-md shadow hover:bg-cokelat transition">
+                                        Detail
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-<script>
-    @if(Session::has('message'))
-        var type = "{{ Session::get('alert-type', 'info') }}";
-        switch (type) {
-            case 'info':
-                toastr.info("{{ Session::get('message') }}");
-                break;
-            case 'success':
-                toastr.success("{{ Session::get('message') }}");
-                break;
-            case 'warning':
-                toastr.warning("{{ Session::get('message') }}");
-                break;
-            case 'error':
-                toastr.error("{{ Session::get('message') }}");
-                break;
-        }
-    @endif
-</script>
 @endsection

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
 
+    // tampilan homepage
     public function index()
     {
         $allcts = Category::orderBy('id', 'asc')->take(6)->get();
@@ -65,6 +66,7 @@ class UserController extends Controller
         return view('customer.pemesanan', compact('category'));
     }
 
+    // Tampilan eddit profile
     public function ProfileStore(Request $request)
     {
         $id = Auth::user()->id;
@@ -96,6 +98,7 @@ class UserController extends Controller
         return redirect()->back()->with($notification);
     }
 
+    // menghapus foto profile user jika terjadi update pada foto profile
     private function deleteOldImage(string $oldPhotoPath): void
     {
         $fullPath = public_path('upload/user_images/' . $oldPhotoPath);
@@ -146,9 +149,16 @@ class UserController extends Controller
     // show detail order
     public function HistoryOrder()
     {
-        $orders = order::latest()->get();
-        return view('customer.dashboard.order', compact('orders'));
+        $orders = Order::where('user_id', auth()->id())->latest()->get();
+
+        // Ambil semua order_id yang sudah diulas oleh user yang sedang login
+        $reviewedOrderIds = \App\Models\Review::where('user_id', auth()->id())
+            ->pluck('order_id')
+            ->toArray();
+
+        return view('customer.dashboard.order', compact('orders', 'reviewedOrderIds'));
     }
+
 
     public function HistoryTransaksi()
     {
@@ -175,13 +185,15 @@ class UserController extends Controller
         return view('customer.contact');
     }
 
-    public function showAboutUs() {
+    public function showAboutUs()
+    {
         return view('customer.about');
     }
 
-    public function showKategory() {
+    public function showKategory()
+    {
         $cts = Category::latest()->get();
         return view('customer.kategori', compact('cts'));
     }
-    
+
 }

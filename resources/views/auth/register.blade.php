@@ -4,192 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Account</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cokelat: "#40342A",
+                        cream: "#F2F0EB",
+                        abu: "#333",
+                        putih: "#fff",
+                        kuning: "#FFF6CC",
+                        hitam: "#000000"
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
         }
-        
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            display: flex;
-            height: 100vh;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .register-container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            width: 480px;
-            padding: 32px;
-            text-align: center;
-        }
-        
-        .register-header {
-            margin-bottom: 16px;
-        }
-        
-        .register-header h1 {
-            color: #333;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-        
-        .register-header p {
-            color: #777;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .input-group {
-            margin-bottom: 12px;
-            text-align: left;
-        }
-        
-        .input-group label {
-            display: block;
-            color: #555;
-            font-size: 14px;
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
-        
-        .input-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-        
-        .input-group input:focus {
-            border-color: #4a90e2;
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-            outline: none;
-        }
-        
-        .name-fields {
-            display: flex;
-            gap: 2px;
-        }
-        
-        .name-fields .input-group {
-            flex: 1;
-        }
-        
-        .terms {
-            display: flex;
-            align-items: flex-start;
-            margin: 20px 0 25px;
-            font-size: 13px;
-            text-align: left;
-        }
-        
-        .terms input {
-            margin-right: 10px;
-            margin-top: 3px;
-        }
-        
-        .terms label {
-            color: #555;
-            font-weight: 500;
-        }
-        
-        .terms a {
-            color: #4a90e2;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        .register-button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(to right, #4a90e2, #63b3ed);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            letter-spacing: 0.5px;
-            margin-bottom: 20px;
-        }
-        
-        .register-button:hover {
-            background: linear-gradient(to right, #3a7bc8, #4a90e2);
-            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
-        }
-        
-        .login-link {
-            font-size: 14px;
-            color: #777;
-            font-weight: 500;
-        }
-        
-        .login-link a {
-            color: #4a90e2;
-            text-decoration: none;
-            font-weight: 600;
-        }
-    </style>
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="register-container">
-        <div class="register-header">
-            <h1>Create Account</h1>
-        </div>
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        @endif
+<body class="bg-cream min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-sm border border-opacity-5 border-cokelat">
+        <div class="p-6">
+            <div class="text-center mb-5">
+                <h1 class="text-xl font-semibold text-cokelat mb-1">Create Account</h1>
+                <p class="text-gray-500 text-xs">Join us to get started</p>
+            </div>
 
-        @if (Session::has('error'))
-            <li>{{ Session::get('error')}}</li>
-        @endif
+            <!-- Error Messages -->
+            @if ($errors->any())
+                <ul class="mb-4 space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li class="text-xs bg-opacity-10 bg-cokelat text-cokelat px-3 py-2 rounded border-l-2 border-cokelat">
+                            {{ $error }}
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
 
-        @if (Session::has('success'))
-            <li>{{ Session::get('success')}}</li>
-        @endif
-        
-        <form method="POST" action="{{route('register')}}">
-          @csrf
-            <div class="name-fields">
-                <div class="input-group">
-                    <label for="first-name">Username  </label>
-                    <input type="text" name="name" id="first-name" placeholder="Enter first name">
+            @if (Session::has('error'))
+                <div class="text-xs bg-opacity-10 bg-cokelat text-cokelat px-3 py-2 rounded border-l-2 border-cokelat mb-4">
+                    {{ Session::get('error') }}
                 </div>
-            </div>
-            
-            <div class="input-group">
-                <label for="email">Email Address</label>
-                <input type="email" name="email" id="email" placeholder="Enter your email">
-            </div>
-            
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" placeholder="Create password">
-            </div>
-            
-            <div class="input-group">
-                <label for="confirm-password">Confirm Password</label>
-                <input type="password" name="password_confirmation" id="confirm-password" placeholder="Repeat password">
-            </div>
-            
-            <button type="submit" class="register-button">REGISTER</button>
-            
-            <div class="login-link">
-                Already have an account? <a href="{{route('login')}}">Login here</a>
-            </div>
-        </form>
+            @endif
+
+            @if (Session::has('success'))
+                <div class="text-xs bg-opacity-10 bg-cokelat text-cokelat px-3 py-2 rounded border-l-2 border-cokelat mb-4">
+                    {{ Session::get('success') }}
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('register') }}" class="space-y-3">
+                @csrf
+                
+                <div>
+                    <label for="username" class="block text-xs font-medium text-cokelat mb-1">Username</label>
+                    <input 
+                        type="text" 
+                        name="name" 
+                        id="username" 
+                        placeholder="Masukkan Username"
+                        class="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:border-cokelat focus:ring-1 focus:ring-opacity-20 focus:ring-cokelat bg-cream bg-opacity-30">
+                </div>
+                
+                <div>
+                    <label for="email" class="block text-xs font-medium text-cokelat mb-1">Email</label>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        id="email" 
+                        placeholder="Masukkan Email"
+                        class="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:border-cokelat focus:ring-1 focus:ring-opacity-20 focus:ring-cokelat bg-cream bg-opacity-30">
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-xs font-medium text-cokelat mb-1">Password</label>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        id="password" 
+                        placeholder="Masukkan password"
+                        class="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:border-cokelat focus:ring-1 focus:ring-opacity-20 focus:ring-cokelat bg-cream bg-opacity-30">
+                </div>
+                
+                <div>
+                    <label for="confirm-password" class="block text-xs font-medium text-cokelat mb-1">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        name="password_confirmation" 
+                        id="confirm-password" 
+                        placeholder="Masukkan ulang password"
+                        class="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:border-cokelat focus:ring-1 focus:ring-opacity-20 focus:ring-cokelat bg-cream bg-opacity-30">
+                </div>
+                
+                <button 
+                    type="submit" 
+                    class="w-full py-2 px-4 bg-cokelat hover:bg-opacity-90 text-kuning text-sm font-medium rounded-lg mt-4">
+                    Register
+                </button>
+                
+                <div class="text-center text-xs text-gray-500 mt-4">
+                    Already have an account? <a href="{{ route('login') }}" class="text-cokelat font-medium">Sign in</a>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>
