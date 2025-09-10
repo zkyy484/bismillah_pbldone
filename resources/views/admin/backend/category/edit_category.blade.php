@@ -33,6 +33,60 @@
                         placeholder="Masukkan nama kategori" value="{{$category->description}}">
                 </div>
 
+                {{-- Ukuran Tanah (Panjang x Lebar) --}}
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="panjang_tanah" class="block text-sm font-medium text-gray-700 mb-2">Panjang Tanah (m)</label>
+                        <input type="number" name="panjang_tanah" id="panjang_tanah"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                            placeholder="Masukkan panjang tanah">
+                    </div>
+                    <div>
+                        <label for="lebar_tanah" class="block text-sm font-medium text-gray-700 mb-2">Lebar Tanah (m)</label>
+                        <input type="number" name="lebar_tanah" id="lebar_tanah"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                            placeholder="Masukkan lebar tanah">
+                    </div>
+                </div>
+                
+                 {{-- Luas Lahan (otomatis hasil perkalian) --}}
+                <div class="form-group mb-4">
+                    <label for="luas_lahan" class="block text-sm font-medium text-gray-700 mb-2">Luas Lahan (m²)</label>
+                    <input type="number" name="luas_lahan" id="luas_lahan" readonly
+                        class="bg-gray-100 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none">
+                </div>
+
+                 {{-- Luas Bangunan --}}
+                <div class="form-group mb-4">
+                    <label for="luas_bangunan" class="block text-sm font-medium text-gray-700 mb-2">Luas Bangunan (m²)</label>
+                    <input type="number" name="luas_bangunan" id="luas_bangunan"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                        placeholder="Masukkan luas bangunan">
+                </div>
+
+                
+                {{-- Lantai, Kamar Tidur, Kamar Mandi --}}
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div>
+                        <label for="lantai" class="block text-sm font-medium text-gray-700 mb-2">Jumlah Lantai</label>
+                        <input type="number" name="lantai" id="lantai"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+                            value="1">
+                    </div>
+                    <div>
+                        <label for="kamar_tidur" class="block text-sm font-medium text-gray-700 mb-2">Kamar Tidur</label>
+                        <input type="number" name="kamar_tidur" id="kamar_tidur"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+                            value="0">
+                    </div>
+                    <div>
+                        <label for="kamar_mandi" class="block text-sm font-medium text-gray-700 mb-2">Kamar Mandi</label>
+                        <input type="number" name="kamar_mandi" id="kamar_mandi"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+                            value="0">
+                    </div>
+                </div>
+
                 {{-- Nama Harga --}}
                 <div class="form-group mb-4">
                     <label for="base_price" class="block text-sm font-medium text-gray-700 mb-2">Harga</label>
@@ -40,6 +94,7 @@
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                         placeholder="Masukkan Harga" value="{{$category->base_price}}">
                 </div>
+
 
                 {{-- Foto --}}
                 <div class="form-group mb-4">

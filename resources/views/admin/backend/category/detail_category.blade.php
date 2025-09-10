@@ -1,4 +1,5 @@
-@extends('customer.layouts.app')
+@extends('admin.layouts.app')
+
 
 @section('content')
 
@@ -29,27 +30,14 @@
         <div>
             <h1 class="text-2xl font-bold">{{ $category->nama_categori }}</h1>
             <p class="text-gray-600 mb-2">
-                Didesain oleh <span class="text-blue-600 font-semibold">Nazarch Studio</span>
-            </p>
 
-            <!-- Rating -->
-            <div class="flex items-center gap-2 mb-4">
-                <span class="text-yellow-500">★★★★★</span>
-                <span class="font-semibold">4.9</span>
-                <span class="text-gray-500">(152)</span>
-            </div>
+            </p>
 
             <!-- Harga -->
             <p class="text-gray-600">Biaya desain mulai dari</p>
             <p class="text-2xl font-bold text-gray-900 mb-6">
                 Rp{{ number_format($category->base_price, 0, ',', '.') }}
             </p>
-         <!-- Tab Navigasi -->
-            <div class="flex gap-3 mb-4">
-                <a href="{{route('user.order')}}">
-                <button class="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium">pesan sekarang</button>
-                </a>
-            </div>
 
             <!-- Detail Info -->
             <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
@@ -83,6 +71,7 @@
             </div>
         </div>
     </section>
+    
 
     <!-- Deskripsi -->
     <section class="max-w-7xl mx-auto px-6 pt-2 pb-12">

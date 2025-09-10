@@ -11,6 +11,7 @@ use Illuminate\Database\Events\TransactionRolledBack;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\ModelRumahController;
 
 
 Route::get('/category', [UserController::class, 'showKategory'])->name('show.kategory');
@@ -90,6 +91,7 @@ Route::middleware('admin')->group(function () {
         Route::get('/edit/category/{id}', 'EditCategory')->name('edit.category');
         Route::post('/update/category', 'UpdateCategory')->name('update.category');
         Route::get('/delete/category/{id}', 'DeleteCategory')->name('delete.category');
+        Route::get('/admin/detail/category/{id}', 'DetailCategory')->name('admin.detail.category');
     });
 
     // All Admin Image Category    
@@ -102,6 +104,17 @@ Route::middleware('admin')->group(function () {
         Route::get('/delete/cat_image/{id}', 'DeleteCatImage')->name('delete.catimage');
 
     });
+
+    //All Admin Model Rumah
+    Route::controller(ModelRumahController::class)->group(function () {
+    Route::get('/admin/model_rumah', 'index')->name('admin.model_rumah.index');
+    Route::get('/admin/model_rumah/create', 'create')->name('admin.model_rumah.create');
+    Route::post('/admin/model_rumah/store', 'store')->name('admin.model_rumah.store');
+    Route::get('/admin/model_rumah/edit{id}', 'edit')->name('admin.model_rumah.edit');
+    Route::put('/admin/model_rumah/update{id}', 'update')->name('admin.model_rumah.update');
+    Route::delete('/admin/model_rumah/delete/{id}', 'destroy')->name('admin.model_rumah.destroy');
+    
+});
 
     // All Admin Orders
     Route::controller(OrderController::class)->group(function () {

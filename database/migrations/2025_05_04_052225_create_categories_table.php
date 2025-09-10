@@ -16,6 +16,16 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->decimal('base_price', 10, 2);
             $table->string('photo');
+
+            // Ukuran lahan pakai panjang x lebar
+            $table->integer('panjang_tanah')->nullable(); // dalam meter
+            $table->integer('lebar_tanah')->nullable();   // dalam meter
+            $table->integer('luas_lahan')->nullable();    // hasil panjang * lebar
+            $table->integer('luas_bangunan')->nullable(); // dalam m²
+            $table->tinyInteger('lantai')->default(1);    // jumlah lantai
+            $table->tinyInteger('kamar_tidur')->default(0);
+            $table->tinyInteger('kamar_mandi')->default(0);
+
             $table->timestamps();
         });
     }

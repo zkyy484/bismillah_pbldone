@@ -12,10 +12,10 @@
             <div>
                 <h3 class="text-lg font-semibold border-b-2 border-white inline-block mb-3 pb-1">Quick Links</h3>
                 <ul class="space-y-2">
-                    <li><a href="#" class="hover:text-light transition-colors block">Home</a></li>
-                    <li><a href="#" class="hover:text-light transition-colors block">Categories</a></li>
-                    <li><a href="#" class="hover:text-light transition-colors block">About</a></li>
-                    <li><a href="#" class="hover:text-light transition-colors block">Contact</a></li>
+                    <li><a href="#" class="hover:text-light transition-colors block">Halaman Utama</a></li>
+                    <li><a href="#" class="hover:text-light transition-colors block">Kategori</a></li>
+                    <li><a href="#" class="hover:text-light transition-colors block">Tentang Kami</a></li>
+                    <li><a href="#" class="hover:text-light transition-colors block">Kontak</a></li>
                 </ul>
             </div>
 

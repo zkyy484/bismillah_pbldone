@@ -17,6 +17,7 @@
                         putih: '#fff',
                         kuning: '#FFF6CC',
                         hitam: '#000000',
+                        biru: '#3498DB'
                     }
                 }
             }

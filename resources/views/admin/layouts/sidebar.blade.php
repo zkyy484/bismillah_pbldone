@@ -20,6 +20,13 @@
             <span class="{{ request()->routeIs('all.category') ? 'text-cokelat' : 'group-hover:text-cokelat' }}">Desain Rumah</span>
         </a>
 
+        <a href="{{route('admin.model_rumah.index')}}"
+            class="flex items-center px-4 py-3 group transition-all duration-200 rounded-lg hover:bg-putih hover:bg-opacity-90 hover:scale-[1.02]
+            {{ request()->routeIs('admin.model_rumah.index') ? 'bg-putih text-cokelat font-medium' : 'text-putih' }}">
+            <i class="fas fa-images mr-3 text-lg {{ request()->routeIs('admin.model_rumah.index') ? 'text-cokelat' : 'group-hover:text-cokelat' }}"></i>
+            <span class="{{ request()->routeIs('admin.model_rumah.index') ? 'text-cokelat' : 'group-hover:text-cokelat' }}">Model Rumah</span>
+        </a>
+
         <a href="{{route('all.catimage')}}"
             class="flex items-center px-4 py-3 group transition-all duration-200 rounded-lg hover:bg-putih hover:bg-opacity-90 hover:scale-[1.02]
             {{ request()->routeIs('all.catimage') ? 'bg-putih text-cokelat font-medium' : 'text-putih' }}">
