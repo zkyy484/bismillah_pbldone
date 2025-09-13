@@ -23,9 +23,6 @@
                 <th class="px-2 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">
                     Nama Model
                 </th>
-                <th class="px-10 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">
-                    Status
-                </th>
                 <th class="px-8 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">
                         Aksi
                 </th>
@@ -39,7 +36,6 @@
             <tr>
                 <td class="px-4 py-2 border">{{ $model->id }}</td>
                 <td class="px-4 py-2 border">{{ $model->nama_model }}</td>
-                <td class="px-4 py-2 border">{{ ucfirst($model->status) }}</td>
                 <td class="px-4 py-2 border flex gap-2">
                     <a href="{{ route('admin.model_rumah.edit', $model->id) }}" class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</a>
                     <form action="{{ route('admin.model_rumah.destroy', $model->id) }}" method="POST" onsubmit="return confirm('Yakin hapus?')">

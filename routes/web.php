@@ -92,6 +92,7 @@ Route::middleware('admin')->group(function () {
         Route::post('/update/category', 'UpdateCategory')->name('update.category');
         Route::get('/delete/category/{id}', 'DeleteCategory')->name('delete.category');
         Route::get('/admin/detail/category/{id}', 'DetailCategory')->name('admin.detail.category');
+        Route::patch('/admin/category/{id}/status', 'ToggleStatus')->name('admin.category.status');
     });
 
     // All Admin Image Category    
@@ -107,14 +108,14 @@ Route::middleware('admin')->group(function () {
 
     //All Admin Model Rumah
     Route::controller(ModelRumahController::class)->group(function () {
-    Route::get('/admin/model_rumah', 'index')->name('admin.model_rumah.index');
-    Route::get('/admin/model_rumah/create', 'create')->name('admin.model_rumah.create');
-    Route::post('/admin/model_rumah/store', 'store')->name('admin.model_rumah.store');
-    Route::get('/admin/model_rumah/edit{id}', 'edit')->name('admin.model_rumah.edit');
-    Route::put('/admin/model_rumah/update{id}', 'update')->name('admin.model_rumah.update');
-    Route::delete('/admin/model_rumah/delete/{id}', 'destroy')->name('admin.model_rumah.destroy');
-    
-});
+        Route::get('/admin/model_rumah', 'index')->name('admin.model_rumah.index');
+        Route::get('/admin/model_rumah/create', 'create')->name('admin.model_rumah.create');
+        Route::post('/admin/model_rumah/store', 'store')->name('admin.model_rumah.store');
+        Route::get('/admin/model_rumah/edit{id}', 'edit')->name('admin.model_rumah.edit');
+        Route::put('/admin/model_rumah/update{id}', 'update')->name('admin.model_rumah.update');
+        Route::delete('/admin/model_rumah/delete/{id}', 'destroy')->name('admin.model_rumah.destroy');
+
+    });
 
     // All Admin Orders
     Route::controller(OrderController::class)->group(function () {
@@ -126,16 +127,16 @@ Route::middleware('admin')->group(function () {
     });
 
     // AllTransaksi
-    Route::controller(TransactionController::class)->group(function() {
+    Route::controller(TransactionController::class)->group(function () {
         Route::get('/admin/all/transaksi', 'AllTransaksi')->name('transaksi');
         Route::get('/admin/edit/transaksi/{transaction}', 'EditTransaksi')->name('admin.edit.transaksi');
         Route::post('/admin/transactions/{transaction}/status', 'UpdateTransaksi')->name('admin.update.transaksi');
     });
 
-    Route::controller(ReviewController::class)->group(function() {
+    Route::controller(ReviewController::class)->group(function () {
         Route::get('/admin/all/ulasan', 'AdminReview')->name('ulasan');
         Route::post('/admin/approve/ulasan/{id}', 'ApproveReview')->name('admin.approve.ulasan');
-        Route::patch('/admin/reviews/{review}/unapprove',  'unapprove')->name('admin.unapprove.ulasan');
+        Route::patch('/admin/reviews/{review}/unapprove', 'unapprove')->name('admin.unapprove.ulasan');
 
     });
 });

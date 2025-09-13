@@ -11,73 +11,106 @@
             </a>
         </div>
 
-<div class="bg-white rounded-lg shadow overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="min-w-full table-auto">
-            <thead class="bg-cokelat sticky top-0 z-10">
-                <tr>
-                    <th class="px-4 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">
-                        ID
-                    </th>
-                    <th class="px-8 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">
-                        Nama Kategori
-                    </th>
-                     <th class="px-14 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">
-                        Foto
-                    </th>
-                    <th class="px-10 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">
-                        Harga
-                    </th>
-                    <th class="px-14 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">
-                        Action
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="overflow-y-auto max-h-[500px]">
-            <table class="min-w-full table-auto">
-                <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach ($category as $key => $item)
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full table-fixed border-collapse">
+                    <thead class="bg-cokelat sticky top-0 z-10">
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $key + 1 }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                {{ $item->nama_categori }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @if($item->photo)
-                                    <img src="{{ (!empty($item->photo)) ? asset($item->photo) : asset('upload/rumah.jpg') }}"
-                                        alt="Foto Kategori" class="w-16 h-16 object-cover rounded border border-gray-300">
-                                @else
-                                    <span class="text-sm text-gray-400 italic">Tidak ada foto</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                {{ $item->base_price }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <a href="{{ route('edit.category', $item->id) }}"
-                                    class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded mr-2 inline-flex items-center text-sm">
-                                    <i class="fas fa-edit mr-1"></i> Edit
-                                </a>
-                                <a href="{{route('delete.category', $item->id)}}"
-                                    class="delete-confirm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded inline-flex items-center text-sm">
-                                    <i class="fas fa-trash mr-1"></i> Hapus
-                                </a>
-                                <a href="{{ route('admin.detail.category', $item->id) }}"
-                                    class="bg-biru hover:bg-biru text-white px-3 py-1 rounded mr-2 inline-flex items-center text-sm">
-                                    <i class="fas fa-edit mr-1"></i> Detail
-                                </a>
-                            </td>
+                            <th class="w-16 px-4 py-3 text-center text-xs font-medium text-putih uppercase tracking-wider">
+                                ID
+                            </th>
+                            <th class="w-64 px-4 py-3 text-left text-xs font-medium text-putih uppercase tracking-wider">
+                                Nama Kategori
+                            </th>
+                            <th class="w-40 px-4 py-3 text-center text-xs font-medium text-putih uppercase tracking-wider">
+                                Harga
+                            </th>
+                            <th class="w-32 px-4 py-3 text-center text-xs font-medium text-putih uppercase tracking-wider">
+                                Status
+                            </th>
+                            <th class="w-64 px-4 py-3 text-center text-xs font-medium text-putih uppercase tracking-wider">
+                                Action
+                            </th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                </table>
+
+                <div class="overflow-y-auto max-h-[500px]">
+                    <table class="min-w-full table-fixed border-collapse">
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach ($category as $key => $item)
+                                <tr>
+                                    <!-- ID -->
+                                    <td class="w-16 px-4 py-4 text-center text-sm text-gray-500">
+                                        {{ $key + 1 }}
+                                    </td>
+
+                                    <!-- Nama Kategori -->
+                                    <td class="w-64 px-4 py-4 text-left text-sm font-medium text-gray-900">
+                                        {{ $item->nama_categori }}
+                                    </td>
+
+                                    <!-- Harga -->
+                                    <td class="w-40 px-4 py-4 text-center text-sm font-medium text-gray-900">
+                                        Rp {{ number_format($item->base_price, 0, ',', '.') }}
+                                    </td>
+
+                                    <!-- Status -->
+                                    <td class="w-32 px-4 py-4 text-center">
+                                        @if($item->status == 'active')
+                                            <span
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                Aktif
+                                            </span>
+                                        @else
+                                            <span
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                Nonaktif
+                                            </span>
+                                        @endif
+                                    </td>
+
+                                    <!-- Action -->
+                                    <td class="w-64 px-4 py-4 text-center text-sm text-gray-500 space-x-2">
+                                        <!-- Tombol Toggle Status -->
+                                        <form action="{{ route('admin.category.status', $item->id) }}" method="POST"
+                                            class="inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit"
+                                                class="px-3 py-1 rounded text-sm font-medium
+                                        {{ $item->status == 'active' ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-green-500 hover:bg-green-600 text-white' }}">
+                                                {{ $item->status == 'active' ? 'Nonaktifkan' : 'Aktifkan' }}
+                                            </button>
+                                        </form>
+
+                                        <!-- Tombol Edit -->
+                                        <a href="{{ route('edit.category', $item->id) }}"
+                                            class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded inline-flex items-center text-sm">
+                                            <i class="fas fa-edit mr-1"></i> Edit
+                                        </a>
+
+                                        <!-- Tombol Hapus -->
+                                        <a href="{{ route('delete.category', $item->id) }}"
+                                            class="delete-confirm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded inline-flex items-center text-sm">
+                                            <i class="fas fa-trash mr-1"></i> Hapus
+                                        </a>
+
+                                        <!-- Tombol Detail -->
+                                        <a href="{{ route('admin.detail.category', $item->id) }}"
+                                            class="bg-biru hover:bg-biru text-white px-3 py-1 rounded inline-flex items-center text-sm">
+                                            <i class="fas fa-info-circle mr-1"></i> Detail
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
-
 @endsection
 
 @section('scripts')

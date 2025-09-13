@@ -19,4 +19,8 @@ class Category extends Model
     public function orders() {
         return $this->hasMany(order::class);
     }
+
+    public function modelRumah() {
+        return $this->belongsTo(ModelRumah::class, 'model_rumah_id', 'id');
+    }
 }

@@ -16,7 +16,8 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->decimal('base_price', 10, 2);
             $table->string('photo');
-
+           
+            
             // Ukuran lahan pakai panjang x lebar
             $table->integer('panjang_tanah')->nullable(); // dalam meter
             $table->integer('lebar_tanah')->nullable();   // dalam meter
@@ -25,6 +26,8 @@ return new class extends Migration {
             $table->tinyInteger('lantai')->default(1);    // jumlah lantai
             $table->tinyInteger('kamar_tidur')->default(0);
             $table->tinyInteger('kamar_mandi')->default(0);
+
+            $table->enum('status', ['active', 'inactive'])->default('active'); // 👈 Tambahan status
 
             $table->timestamps();
         });

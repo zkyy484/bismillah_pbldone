@@ -7,21 +7,25 @@
     <section class="max-w-7xl mx-auto px-6 pt-28 pb-2 grid lg:grid-cols-2 gap-8">
         <!-- Gambar -->
         <div class="relative rounded-2xl overflow-hidden shadow-md">
-            @if($category->images->isNotEmpty())
-                <img src="{{ asset($category->images->first()->image_path) }}" 
-                     alt="{{ $category->nama_categori }}" 
-                     class="w-full h-[400px] object-cover">
-            @else
-                <img src="https://via.placeholder.com/800x400?text=No+Image" 
-                     alt="No Image" 
-                     class="w-full h-[400px] object-cover">
-            @endif
+            <div id="slider" class="flex transition-transform duration-500" style="transform: translateX(0);">
+                @if($category->images->isNotEmpty())
+                    @foreach($category->images as $image)
+                        <img src="{{ asset($image->image_path) }}" alt="{{ $category->nama_categori }}"
+                            class="w-full h-[400px] object-cover flex-shrink-0">
+                    @endforeach
+                @else
+                    <img src="https://via.placeholder.com/800x400?text=No+Image" alt="No Image"
+                        class="w-full h-[400px] object-cover flex-shrink-0">
+                @endif
+            </div>
 
             <!-- Tombol Navigasi -->
-            <button class="absolute top-1/2 left-4 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100">
+            <button id="prevBtn"
+                class="absolute top-1/2 left-4 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100">
                 ←
             </button>
-            <button class="absolute top-1/2 right-4 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100">
+            <button id="nextBtn"
+                class="absolute top-1/2 right-4 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100">
                 →
             </button>
         </div>
@@ -42,7 +46,7 @@
             <!-- Detail Info -->
             <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
                 <div>
-                    Ukuran Lahan: 
+                    Ukuran Lahan:
                     <span class="font-semibold">
                         {{ $category->panjang_tanah }}m x {{ $category->lebar_tanah }}m
                     </span>
@@ -51,7 +55,7 @@
                     Lantai: <span class="font-semibold">{{ $category->lantai }}</span>
                 </div>
                 <div>
-                    Luas Lahan: 
+                    Luas Lahan:
                     <span class="font-semibold">
                         {{ $category->panjang_tanah * $category->lebar_tanah }} m²
                     </span>
@@ -60,7 +64,7 @@
                     Kamar Tidur: <span class="font-semibold">{{ $category->kamar_tidur }}</span>
                 </div>
                 <div>
-                    Luas Bangunan: 
+                    Luas Bangunan:
                     <span class="font-semibold">
                         {{ $category->luas_bangunan }} m²
                     </span>
@@ -71,7 +75,7 @@
             </div>
         </div>
     </section>
-    
+
 
     <!-- Deskripsi -->
     <section class="max-w-7xl mx-auto px-6 pt-2 pb-12">
@@ -80,4 +84,28 @@
             {{ $category->description ?? 'Belum ada deskripsi.' }}
         </p>
     </section>
+@endsection
+
+@section('scripts')
+    {{-- SC tombol kanan kiri gambar --}}
+    <script>
+        const slider = document.getElementById('slider');
+        const images = slider.querySelectorAll('img');
+        const totalSlides = images.length;
+        let index = 0;
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            index = (index > 0) ? index - 1 : totalSlides - 1;
+            updateSlider();
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            index = (index < totalSlides - 1) ? index + 1 : 0;
+            updateSlider();
+        });
+
+        function updateSlider() {
+            slider.style.transform = `translateX(-${index * 100}%)`;
+        }
+    </script>
 @endsection

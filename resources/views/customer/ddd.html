@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nazarch Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body class="bg-white">
+
+  <!-- Navbar -->
+  <nav class="bg-[rgb(64,52,42)] text-white">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+      <!-- Logo + Brand -->
+      <div class="flex items-center space-x-3">
+        <img src="your-logo.png" alt="Logo" class="w-10 h-10 rounded-full bg-white object-cover">
+        <span class="text-lg font-bold">Nazarch Studio</span>
+      </div>
+
+      <!-- Menu -->
+      <ul class="hidden md:flex space-x-8 font-medium">
+        <li><a href="#" class="hover:text-gray-300">Halaman Utama</a></li>
+        <li><a href="#" class="hover:text-gray-300">Kategori</a></li>
+        <li><a href="#" class="hover:text-gray-300">Tentang Kami</a></li>
+        <li><a href="#" class="hover:text-gray-300">Kontak</a></li>
+      </ul>
+
+      <!-- Buttons -->
+      <div class="space-x-4">
+        <button class="px-4 py-2 rounded-lg border border-white hover:bg-white hover:text-[rgb(64,52,42)] transition">Login</button>
+        <button class="px-4 py-2 rounded-lg bg-white text-[rgb(64,52,42)] font-semibold hover:opacity-90 transition">Register</button>
+      </div>
+    </div>
+  </nav>
+
+ <!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-[rgb(242,240,235)] to-[rgb(64,52,42)]">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center px-6 py-36">
+    <!-- Text -->
+    <div class="text-[rgb(64,52,42)]">
+      <h1 class="text-6xl md:text-6x1 font-bold leading-tight mb-6">
+        Dapatkan Desain Hunian Impian Anda!
+      </h1>
+      <p class="text-lg mb-8">
+        Bangun rumah lebih mudah bersama <span class="font-semibold">Nazarch Studio</span>
+      </p>
+      <div class="flex">
+        <select class="w-full px-4 py-3 rounded-l-lg border border-gray-300 focus:outline-none">
+          <option value="">Pilih desain</option>
+          <option value="minimalis">Minimalis</option>
+          <option value="modern">Modern</option>
+        </select>
+        <button class="px-5 bg-[rgb(64,52,42)] text-white rounded-r-lg hover:opacity-90">Cari</button>
+      </div>
+    </div>
+
+    <div class="flex justify-center relative w-full h-[400px] overflow-hidden rounded-xl shadow-lg">
+      <div id="carousel" class="flex transition-transform duration-700 ease-in-out w-full">
+        <!-- Gambar 1 -->
+        <img src="satu.jpg" alt="Desain 1" class="w-full object-cover rounded-xl">
+        <!-- Gambar 2 -->
+        <img src="dua.jpg" alt="Desain 2" class="w-full object-cover rounded-xl">
+        <!-- Gambar 3 -->
+        <img src="tiga.jpg" alt="Desain 3" class="w-full object-cover rounded-xl">
+      </div>
+    </div>
+  </div>
+</section>
+<section class="max-w-6xl mx-auto px-6 py-16">
+  <h2 class="text-3xl font-bold text-center mb-10">Temukan Desain Impianmu</h2>
+  
+  <div class="grid md:grid-cols-2 gap-10">
+    <!-- Fitur Showcase -->
+    <div class="space-y-6">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-[rgb(64,52,42)] text-white">
+          🌱
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg">Ramah Lingkungan</h3>
+          <p class="text-sm text-gray-600">Menggunakan desain hemat energi dan material ramah lingkungan.</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-[rgb(64,52,42)] text-white">
+          🧱
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg">Material Premium</h3>
+          <p class="text-sm text-gray-600">Dibangun dengan bahan berkualitas tinggi untuk ketahanan maksimal.</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-[rgb(64,52,42)] text-white">
+          🏠
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg">Tahan Gempa</h3>
+          <p class="text-sm text-gray-600">Struktur bangunan sudah didesain sesuai standar keamanan.</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-[rgb(64,52,42)] text-white">
+          💡
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg">Smart Home Ready</h3>
+          <p class="text-sm text-gray-600">Mendukung instalasi perangkat pintar untuk kenyamanan hidup.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gaya Desain -->
+    <div class="bg-gray-50 rounded-xl p-8 shadow">
+      <label class="block font-medium mb-2">Pilih Gaya Desain</label>
+      <select class="w-full px-4 py-3 border rounded-lg focus:outline-none mb-6">
+        <option value="">Pilih Gaya Desain</option>
+        <option value="minimalis">Minimalis</option>
+        <option value="modern">Modern</option>
+      </select>
+
+      <button class="w-full px-6 py-3 bg-[rgb(64,52,42)] text-white rounded-lg hover:opacity-90 flex items-center justify-center gap-2">
+        Cari Desain
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4-4m0 0a7 7 0 1110-10 7 7 0 01-10 10z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+<section class="max-w-7xl mx-auto px-6 py-16">
+  <div class="flex justify-between items-center mb-8">
+    <h2 class="text-3xl font-bold">Rekomendasi Desain</h2>
+    <a href="#" class="px-4 py-2 bg-[rgb(64,52,42)] text-white rounded-lg hover:opacity-90 flex items-center gap-2">
+      Lihat Semua →
+    </a>
+  </div>
+
+  <!-- Swiper -->
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <!-- Card -->
+      <div class="swiper-slide group relative rounded-xl overflow-hidden shadow-lg">
+        <img src="/img/rumah1.jpg" class="w-full h-64 object-cover" alt="Desain Rumah">
+
+        <!-- Info Singkat -->
+        <div class="p-4">
+          <h3 class="font-bold text-lg">Minimalis</h3>
+          <p class="text-sm text-gray-500">Design by Pedabayu Arch</p>
+          <p class="mt-2 text-sm">Lahan Minimal: 9m x 14m</p>
+          <p class="text-sm font-semibold">Rp735.000.000</p>
+        </div>
+
+        <!-- Detail Hover -->
+        <div class="absolute inset-0 bg-black/70 text-white opacity-0 group-hover:opacity-100 transition duration-300 p-6 flex flex-col justify-center">
+          <p>Luas Bangunan: 147 m²</p>
+          <p>Kamar Tidur: 4</p>
+          <p>Kamar Mandi: 5</p>
+          <p>Jumlah Lantai: 2</p>
+          <a href="#" class="mt-4 bg-white text-black px-4 py-2 rounded-lg">Lihat Detail</a>
+        </div>
+      </div>
+      <!-- Tambah slide lainnya -->
+    </div>
+
+    <!-- Navigation -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+<section class="max-w-6xl mx-auto px-6 py-16">
+  <h2 class="text-3xl font-bold text-center mb-10">Testimoni Klien</h2>
+
+  <div class="swiper myTestimoni">
+    <div class="swiper-wrapper">
+      
+      <!-- Card Testimoni -->
+      <div class="swiper-slide bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center mb-4">
+          <img src="/img/client1.jpg" class="w-14 h-14 rounded-full mr-4" alt="Client">
+          <div>
+            <h3 class="font-semibold text-lg">Fajar Wijayanto</h3>
+            <p class="text-yellow-500">⭐⭐⭐⭐⭐</p>
+          </div>
+        </div>
+        <p class="text-gray-600">
+          Terimakasih tim Nazarch Studio, rumah impian saya bisa terwujud dengan hasil desain yang sangat memuaskan.
+        </p>
+      </div>
+
+      <!-- Card lain -->
+      <div class="swiper-slide bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center mb-4">
+          <img src="/img/client2.jpg" class="w-14 h-14 rounded-full mr-4" alt="Client">
+          <div>
+            <h3 class="font-semibold text-lg">Rina Kartika</h3>
+            <p class="text-yellow-500">⭐⭐⭐⭐⭐</p>
+          </div>
+        </div>
+        <p class="text-gray-600">
+          Diskusi dengan tim sangat mudah, hasil sesuai ekspektasi, recommended banget!
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Navigasi -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+<footer class="bg-[rgb(64,52,42)] text-white py-12 mt-20 font-poppins">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
+    
+    <!-- Brand -->
+    <div>
+      <div class="flex items-center mb-4">
+        <img src="/img/logo.png" alt="Nazarch Logo" class="w-12 h-12 rounded-full bg-white p-1 mr-3">
+        <span class="font-bold text-2xl">Nazarch Studio</span>
+      </div>
+      <p class="text-gray-300 text-sm">
+        Kami membantu mewujudkan hunian impian Anda dengan desain yang modern, minimalis, dan fungsional.
+      </p>
+    </div>
+
+    <!-- Navigasi -->
+    <div>
+      <h3 class="font-semibold text-lg mb-4">Navigasi</h3>
+      <ul class="space-y-2 text-gray-300">
+        <li><a href="/" class="hover:text-white">Beranda</a></li>
+        <li><a href="/kategori" class="hover:text-white">Kategori</a></li>
+        <li><a href="/tentang" class="hover:text-white">Tentang Kami</a></li>
+        <li><a href="/kontak" class="hover:text-white">Kontak</a></li>
+      </ul>
+    </div>
+
+    <!-- Layanan -->
+    <div>
+      <h3 class="font-semibold text-lg mb-4">Layanan</h3>
+      <ul class="space-y-2 text-gray-300">
+        <li><a href="#" class="hover:text-white">Desain Rumah</a></li>
+        <li><a href="#" class="hover:text-white">Konsultasi</a></li>
+        <li><a href="#" class="hover:text-white">Interior</a></li>
+        <li><a href="#" class="hover:text-white">Renovasi</a></li>
+      </ul>
+    </div>
+
+    <!-- Sosial Media -->
+    <div>
+      <h3 class="font-semibold text-lg mb-4">Ikuti Kami</h3>
+      <div class="flex space-x-4">
+        <a href="#" class="hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="hover:text-pink-400"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="hover:text-sky-400"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="hover:text-red-500"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom -->
+  <div class="border-t border-gray-600 mt-10 pt-6 text-center text-gray-400 text-sm">
+    © 2025 Nazarch Studio. All rights reserved.
+  </div>
+</footer>
+
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/yourkey.js" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script>
+  const testi = new Swiper(".myTestimoni", {
+    slidesPerView: 2,
+    spaceBetween: 20,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    breakpoints: {
+      0: { slidesPerView: 1 },
+      768: { slidesPerView: 2 }
+    }
+  });
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper(".mySwiper", {
+    slidesPerView: 3,
+    spaceBetween: 20,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>
+
+<script>
+  // Carousel Geser Otomatis
+  const carousel = document.getElementById('carousel');
+  let index = 0;
+  setInterval(() => {
+    index = (index + 1) % 3; 
+    carousel.style.transform = translateX(-${index * 100}%);
+  }, 3000); 
+</script>
+
+</body>
+</html>

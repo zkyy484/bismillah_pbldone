@@ -9,10 +9,14 @@ class ModelRumah extends Model
 {
     use HasFactory;
 
-    protected $table = 'model_rumah';
+    protected $table = 'model_rumahs';
 
     protected $fillable = [
         'nama_model',
-        'status',
+        'image_path'
     ];
+
+    public function modelsRumah() {
+        return $this->hasMany(Category::class);
+    }
 }

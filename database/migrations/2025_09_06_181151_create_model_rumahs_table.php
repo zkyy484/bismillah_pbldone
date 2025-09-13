@@ -6,15 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::create('model_rumah', function (Blueprint $table) {
+        Schema::create('model_rumahs', function (Blueprint $table) {
             $table->id();
             $table->string('nama_model');
-            $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
+            $table->string('image_path');
             $table->timestamps();
         });
     }
 
     public function down(): void {
-        Schema::dropIfExists('model_rumah');
+        Schema::dropIfExists('model_rumahs');
     }
 };
