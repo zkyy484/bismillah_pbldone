@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\ModelRumah;
 use App\Models\order;
 use App\Models\Review;
 use App\Models\Transaction;
@@ -190,10 +191,16 @@ class UserController extends Controller
         return view('customer.about');
     }
 
-    public function showKategory()
+    public function showModel()
     {
-        $cts = Category::latest()->get();
+        $cts = ModelRumah::latest()->get();
         return view('customer.kategori', compact('cts'));
     }
 
+    public function Daftar()  
+    {
+        return view('customer.model');
+        
+    }
 }
+

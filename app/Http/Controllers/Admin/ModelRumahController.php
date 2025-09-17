@@ -70,8 +70,16 @@ class ModelRumahController extends Controller
             'message' => 'Berhasil menambahkan model rumah baru',
             'alert-type' => 'success'
         ]);
+
     }
 
+    public function filterByCategory($id)
+{
+    $category = Category::findOrFail($id);
+    $models = ModelRumah::where('kategori_id', $id)->get();
+
+    return view('admin.model_rumah.index', compact('models', 'category'));
+}
     // // edit form
     // public function edit( $id)
     // {

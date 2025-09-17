@@ -23,4 +23,9 @@ class Category extends Model
     public function modelRumah() {
         return $this->belongsTo(ModelRumah::class, 'model_rumah_id', 'id');
     }
+
+    public function category()
+{
+    return $this->belongsTo(Category::class, 'kategori_id');
+}
 }

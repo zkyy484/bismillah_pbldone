@@ -19,4 +19,9 @@ class ModelRumah extends Model
     public function modelsRumah() {
         return $this->hasMany(Category::class);
     }
+
+    public function category()
+{
+    return $this->belongsTo(Category::class, 'kategori_id');
+}
 }

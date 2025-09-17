@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function AllCategory()
     {
         $category = Category::latest()->get();
-        return view('admin.backend.category.all_category', compact('category'));
+        return view('admin.backend.category.all_category', compact('categories'));
     }
 
     public function AddCategory()
@@ -196,5 +196,15 @@ class CategoryController extends Controller
 
         return view('admin.backend.category.detail_category', compact('category'));
     }
+
+public function filterByCategory($id)
+{
+    // Ambil satu kategori
+    $category = Category::findOrFail($id);
+
+    // Ambil semua model rumah dengan kategori tsb
+    $models = ModelRumah::where('kategori_id', $id)->with('category')->get();
+    return view('admin.model_rumah.index', compact('models', 'category'));
+}
 
 }

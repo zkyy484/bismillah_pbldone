@@ -14,11 +14,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\ModelRumahController;
 
 
-Route::get('/category', [UserController::class, 'showKategory'])->name('show.kategory');
+Route::get('/category', [UserController::class, 'showModel'])->name('show.kategory');
 Route::get('/contact', [UserController::class, 'showContact'])->name('show.contact');
 Route::get('/about_us', [UserController::class, 'showAboutUs'])->name('show.about_us');
 Route::get('/', [UserController::class, 'index'])->name('index');
-
+Route::get('/model',[UserController::class, 'Daftar'])->name('show.model');
 
 Route::get('/dashboard', function () {
     return view('customer.dashboard.dashboard');
@@ -93,6 +93,7 @@ Route::middleware('admin')->group(function () {
         Route::get('/delete/category/{id}', 'DeleteCategory')->name('delete.category');
         Route::get('/admin/detail/category/{id}', 'DetailCategory')->name('admin.detail.category');
         Route::patch('/admin/category/{id}/status', 'ToggleStatus')->name('admin.category.status');
+         Route::get('admin/category/filter/{id}', [ModelRumahController::class, 'filterByCategory'])->name('admin.category.filter');
     });
 
     // All Admin Image Category    
@@ -114,7 +115,8 @@ Route::middleware('admin')->group(function () {
         Route::get('/admin/model_rumah/edit{id}', 'edit')->name('admin.model_rumah.edit');
         Route::put('/admin/model_rumah/update{id}', 'update')->name('admin.model_rumah.update');
         Route::delete('/admin/model_rumah/delete/{id}', 'destroy')->name('admin.model_rumah.destroy');
-
+       
+        
     });
 
     // All Admin Orders

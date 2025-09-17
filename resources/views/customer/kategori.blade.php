@@ -13,12 +13,11 @@
                 <a href="{{route('kategori.detail', $item->id)}}"
                     class="bg-white rounded-lg overflow-hidden shadow-card hover:shadow-cardhover hover:-translate-y-1 transition-all duration-300 cursor-pointer">
                     <div class="h-48 overflow-hidden">
-                        <img src="{{ (!empty($item->photo)) ? url($item->photo) : url('upload/rumah.jpg') }}" alt=""
+                        <img src="{{ (!empty($item->image_path)) ? url($item->image_path) : url('upload/rumah.jpg') }}" alt=""
                             class="w-full h-full object-cover">
                     </div>
                     <div class="p-5">
-                        <h3 class="text-xl text-coklat text-center font-semibold mb-2">{{$item->nama_categori}}</h3>
-                        <p class="text-abu text-center line-clamp-2">{{$item->description}}</p>
+                        <h3 class="text-xl text-coklat text-center font-semibold mb-2">{{$item->nama_model}}</h3>
                     </div>
                 </a>
             @endforeach
