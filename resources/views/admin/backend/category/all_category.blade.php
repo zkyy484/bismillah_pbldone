@@ -3,14 +3,16 @@
 @section('content')
     <div class="container mx-auto px-4 py-4">
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">DAFTAR MODEL RUMAH
-    @isset($category)
+            <h1 class="text-2xl font-bold text-gray-800">
+                DAFTAR MODEL {{ ucfirst($modelRumah->nama_model) }}
+            </h1>
+            {{-- @isset($category)
         (Kategori: {{ $category->nama_categori }})
-    @endisset
+    @endisset --}}
 
-    @foreach ($categories as $item)
-    {{ $item->nama_categori }}
-    @endforeach
+            {{-- @foreach ($produk as $item)
+                {{ $item->nama_categori }}
+            @endforeach --}}
             </h1>
             <a href="{{ route('add.category') }}"
                 class="bg-cokelat hover:bg-amber-800 text-white px-4 py-2 rounded-lg flex items-center">
@@ -20,14 +22,15 @@
         </div>
 
         <!-- Daftar Kategori untuk Filter -->
-        <div class="flex space-x-3 mb-6">
-            @foreach(\App\Models\Category::all() as $cat)
+        {{-- <div class="flex space-x-3 mb-6">
+            @foreach (\App\Models\Category::all() as $cat)
                 <a href="{{ route('admin.category.filter', $cat->id) }}"
                    class="px-4 py-2 rounded {{ isset($category) && $category->id == $cat->id ? 'bg-blue-600 text-white' : 'bg-gray-200' }}">
                     {{ $cat->nama_categori }}
                 </a>
             @endforeach
-        </div>
+        </div> --}}
+        {{-- <input type="" name="model_rumah_id" value="{{ $modelRumah->id }}"> --}}
         <div class="bg-white rounded-lg shadow overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="min-w-full table-fixed border-collapse">
@@ -55,7 +58,7 @@
                 <div class="overflow-y-auto max-h-[500px]">
                     <table class="min-w-full table-fixed border-collapse">
                         <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach ($category as $key => $item)
+                            @foreach ($produk as $key => $item)
                                 <tr>
                                     <!-- ID -->
                                     <td class="w-16 px-4 py-4 text-center text-sm text-gray-500">
@@ -74,7 +77,7 @@
 
                                     <!-- Status -->
                                     <td class="w-32 px-4 py-4 text-center">
-                                        @if($item->status == 'active')
+                                        @if ($item->status == 'active')
                                             <span
                                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                 Aktif
@@ -132,7 +135,7 @@
 
 @section('scripts')
     <script>
-        @if(Session::has('message'))
+        @if (Session::has('message'))
             var type = "{{ Session::get('alert-type', 'info') }}";
             switch (type) {
                 case 'info':

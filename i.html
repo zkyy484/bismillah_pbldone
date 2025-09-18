@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Selamat Ulang Tahun!</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to right, #ffdde1, #ee9ca7);
+      font-family: 'Arial', sans-serif;
+      color: white;
+      text-align: center;
+    }
+    .card {
+      position: relative;
+      z-index: 2;
+      background: rgba(0,0,0,0.5);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.3rem;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Kartu Ucapan -->
+  <div class="card">
+    <h1>🎉 Selamat Ulang Tahun 🎂</h1>
+    <p>Semoga panjang umur, sehat selalu, dan bahagia setiap hari! 💖</p>
+  </div>
+
+  <!-- Musik otomatis -->
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" type="audio/mp3">
+    Browser kamu tidak mendukung audio.
+  </audio>
+
+  <!-- Kembang Api -->
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    class Particle {
+      constructor(x, y, color, size, speedX, speedY) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.size = size;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.life = 100;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.size *= 0.96;
+        this.life--;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+
+    function createFirework(x, y) {
+      const colors = ["#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93"];
+      for (let i = 0; i < 50; i++) {
+        let speedX = (Math.random() - 0.5) * 6;
+        let speedY = (Math.random() - 0.5) * 6;
+        particles.push(new Particle(x, y, colors[Math.floor(Math.random()*colors.length)], 4, speedX, speedY));
+      }
+    }
+
+    function animate() {
+      ctx.fillStyle = "rgba(0,0,0,0.2)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.update();
+        p.draw();
+        if (p.life <= 0) particles.splice(i, 1);
+      });
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("click", (e) => createFirework(e.clientX, e.clientY));
+    setInterval(() => createFirework(Math.random()*canvas.width, Math.random()*canvas.height), 1500);
+
+    animate();
+  </script>
+</body>
+</html>

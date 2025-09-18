@@ -12,6 +12,21 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class CategoryController extends Controller
 {
+    public function AllDesain($id)
+    {
+        // Cari model rumah
+        $modelRumah = \App\Models\ModelRumah::findOrFail($id);
+
+        // Ambil hanya kategori/produk yang punya model_rumah_id sesuai
+        $produk = \App\Models\Category::where('model_rumah_id', $id)->get();
+
+        return view('admin.backend.category.all_category', [
+            'modelRumah' => $modelRumah,
+            'produk' => $produk
+        ]);
+    }
+
+
     public function AllCategory()
     {
         $category = Category::latest()->get();
@@ -83,7 +98,7 @@ class CategoryController extends Controller
             'model_rumah_id' => $request->model_rumah_id, // 🔥 simpan relasi
         ]);
 
-        return redirect()->route('all.category')->with([
+        return redirect()->route('admin.all.desain', $request->model_rumah_id)->with([
             'message' => 'Berhasil menambahkan kategori',
             'alert-type' => 'success',
         ]);
@@ -197,14 +212,14 @@ class CategoryController extends Controller
         return view('admin.backend.category.detail_category', compact('category'));
     }
 
-public function filterByCategory($id)
-{
-    // Ambil satu kategori
-    $category = Category::findOrFail($id);
+    public function filterByCategory($id)
+    {
+        // Ambil satu kategori
+        $category = Category::findOrFail($id);
 
-    // Ambil semua model rumah dengan kategori tsb
-    $models = ModelRumah::where('kategori_id', $id)->with('category')->get();
-    return view('admin.model_rumah.index', compact('models', 'category'));
-}
+        // Ambil semua model rumah dengan kategori tsb
+        $models = ModelRumah::where('kategori_id', $id)->with('category')->get();
+        return view('admin.model_rumah.index', compact('models', 'category'));
+    }
 
 }

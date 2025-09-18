@@ -20,12 +20,13 @@ class Category extends Model
         return $this->hasMany(order::class);
     }
 
+    // relasi ke model runah
     public function modelRumah() {
         return $this->belongsTo(ModelRumah::class, 'model_rumah_id', 'id');
     }
 
-    public function category()
-{
-    return $this->belongsTo(Category::class, 'kategori_id');
-}
+//     public function category()
+// {
+//     return $this->belongsTo(Category::class, 'kategori_id');
+// }
 }

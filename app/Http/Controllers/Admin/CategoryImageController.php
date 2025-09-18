@@ -11,19 +11,19 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class CategoryImageController extends Controller
 {
-    public function AllCatImage()
-    {
-        $cat_image = category_image::latest()->get();
-        return view('admin.backend.category_image.all_catimage', compact('cat_image'));
-    }
+    // public function AllCatImage()
+    // {
+    //     $cat_image = category_image::latest()->get();
+    //     return view('admin.backend.category_image.all_catimage', compact('cat_image'));
+    // }
 
-    public function AddCatImage()
-    {
-        $categories = Category::all();
-        return view('admin.backend.category_image.add_catimage', compact('categories'));
-    }
+    // public function AddCatImage()
+    // {
+    //     $categories = Category::all();
+    //     return view('admin.backend.category_image.add_catimage', compact('categories'));
+    // }
 
-    public function StoreCatImage(Request $request)
+    public function cnaj(Request $request)
     {
         if ($request->file('image_path')) {
             $image = $request->file('image_path');
@@ -58,67 +58,123 @@ class CategoryImageController extends Controller
 
 
 
-    public function EditCatImage($id)
+    public function StoreCatImage(Request $request, $id)
     {
-        $cat_image = category_image::find($id);
-        $categories = Category::all();
-        return view('admin.backend.category_image.edit_catimage', compact('cat_image', 'categories'));
-    }
+        $request->validate([
+            'images.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
+        $category = Category::findOrFail($id);
+        $manager = new ImageManager(new Driver());
 
-    public function UpdateCatImage(Request $request)
-    {
-        $cat_id = $request->id;
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
 
-        if ($request->file('image_path')) {
-            $image = $request->file('image_path');
-            $manager = new ImageManager(new Driver());
+                // Nama unik file
+                $name_gen = hexdec(uniqid()) . '.' . $file->getClientOriginalExtension();
+                $save_path = public_path('upload/category_images/' . $name_gen);
 
-            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+                // Resize gambar
+                $img = $manager->read($file);
+                $img->resize(1600, 900, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $img->save($save_path);
 
-            $save_path = public_path('upload/category_images/' . $name_gen);
-            
+                // Simpan path ke DB
+                $save_url = 'upload/category_images/' . $name_gen;
 
-            $img = $manager->read($image);
-            $img->resize(1600, 900, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-
-            $img->save($save_path);
-
-            $save_url = 'upload/category_images/' . $name_gen;
-
-            // Hapus gambar lama jika ada
-            $old = category_image::find($cat_id);
-            if ($old && file_exists(public_path($old->image_path))) {
-                unlink(public_path($old->image_path));
+                category_image::create([
+                    'category_id' => $category->id,
+                    'image_path' => $save_url,
+                ]);
             }
-
-            category_image::find($cat_id)->update([
-                'category_id' => $request->category_id,
-                'image_path' => $save_url,
-            ]);
-
-            return redirect()->route('all.catimage')->with([
-                'message' => 'Berhasil mengubah foto kategori',
-                'alert-type' => 'success'
-            ]);
-        } else {
-            category_image::find($cat_id)->update([
-                'category_id' => $request->category_id
-            ]);
-
-            return redirect()->route('all.catimage')->with([
-                'message' => 'Berhasil mengubah data kategori',
-                'alert-type' => 'success'
-            ]);
         }
+
+        return back()->with([
+            'message' => 'Berhasil menambahkan foto kategori',
+            'alert-type' => 'success'
+        ]);
     }
 
 
 
     public function DeleteCatImage($id)
+    {
+        $image = category_image::findOrFail($id);
+
+        // Hapus file fisik
+        if (file_exists(public_path($image->image_path))) {
+            unlink(public_path($image->image_path));
+        }
+
+        $image->delete();
+
+        return back()->with('message', 'Foto berhasil dihapus!');
+    }
+
+    // public function EditCatImage($id)
+    // {
+    //     $cat_image = category_image::find($id);
+    //     $categories = Category::all();
+    //     return view('admin.backend.category_image.edit_catimage', compact('cat_image', 'categories'));
+    // }
+
+
+    // public function UpdateCatImage(Request $request)
+    // {
+    //     $cat_id = $request->id;
+
+    //     if ($request->file('image_path')) {
+    //         $image = $request->file('image_path');
+    //         $manager = new ImageManager(new Driver());
+
+    //         $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+
+    //         $save_path = public_path('upload/category_images/' . $name_gen);
+
+
+    //         $img = $manager->read($image);
+    //         $img->resize(1600, 900, function ($constraint) {
+    //             $constraint->aspectRatio();
+    //             $constraint->upsize();
+    //         });
+
+    //         $img->save($save_path);
+
+    //         $save_url = 'upload/category_images/' . $name_gen;
+
+    //         // Hapus gambar lama jika ada
+    //         $old = category_image::find($cat_id);
+    //         if ($old && file_exists(public_path($old->image_path))) {
+    //             unlink(public_path($old->image_path));
+    //         }
+
+    //         category_image::find($cat_id)->update([
+    //             'category_id' => $request->category_id,
+    //             'image_path' => $save_url,
+    //         ]);
+
+    //         return redirect()->route('all.catimage')->with([
+    //             'message' => 'Berhasil mengubah foto kategori',
+    //             'alert-type' => 'success'
+    //         ]);
+    //     } else {
+    //         category_image::find($cat_id)->update([
+    //             'category_id' => $request->category_id
+    //         ]);
+
+    //         return redirect()->route('all.catimage')->with([
+    //             'message' => 'Berhasil mengubah data kategori',
+    //             'alert-type' => 'success'
+    //         ]);
+    //     }
+    // }
+
+
+
+    public function vf($id)
     {
         $item = category_image::find($id);
         $img = $item->image_path;

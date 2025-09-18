@@ -18,7 +18,9 @@ Route::get('/category', [UserController::class, 'showModel'])->name('show.katego
 Route::get('/contact', [UserController::class, 'showContact'])->name('show.contact');
 Route::get('/about_us', [UserController::class, 'showAboutUs'])->name('show.about_us');
 Route::get('/', [UserController::class, 'index'])->name('index');
-Route::get('/model',[UserController::class, 'Daftar'])->name('show.model');
+Route::get('/model', [UserController::class, 'Daftar'])->name('show.model');
+
+Route::get('daftar/category', [UserController::class, 'daftarCategory'])->name('daftar.category');
 
 Route::get('/dashboard', function () {
     return view('customer.dashboard.dashboard');
@@ -93,18 +95,21 @@ Route::middleware('admin')->group(function () {
         Route::get('/delete/category/{id}', 'DeleteCategory')->name('delete.category');
         Route::get('/admin/detail/category/{id}', 'DetailCategory')->name('admin.detail.category');
         Route::patch('/admin/category/{id}/status', 'ToggleStatus')->name('admin.category.status');
-         Route::get('admin/category/filter/{id}', [ModelRumahController::class, 'filterByCategory'])->name('admin.category.filter');
+        Route::get('admin/category/filter/{id}', [ModelRumahController::class, 'filterByCategory'])->name('admin.category.filter');
+
+        Route::get('/admin/model-rumah/{id}/categories', 'AllDesain')->name('admin.all.desain');
+
     });
+
 
     // All Admin Image Category    
     Route::controller(CategoryImageController::class)->group(function () {
-        Route::get('/all/cat_image', 'AllCatImage')->name('all.catimage');
-        Route::get('/add/cat_image', 'AddCatImage')->name('add.catimage');
-        Route::post('/add/cat_image', 'StoreCatImage')->name('catimage.store');
-        Route::get('/edit/cat_image/{id}', 'EditCatImage')->name('edit.catimage');
-        Route::post('/update/cat_image', 'UpdateCatImage')->name('update.catimage');
+        // Route::get('/all/cat_image', 'AllCatImage')->name('all.catimage');
+        // Route::get('/add/cat_image', 'AddCatImage')->name('add.catimage');
+        // Route::get('/edit/cat_image/{id}', 'EditCatImage')->name('edit.catimage');
+        // Route::post('/update/cat_image', 'UpdateCatImage')->name('update.catimage');
         Route::get('/delete/cat_image/{id}', 'DeleteCatImage')->name('delete.catimage');
-
+        Route::post('/add/cat_image/{id}', 'StoreCatImage')->name('catimage.store');
     });
 
     //All Admin Model Rumah
@@ -112,11 +117,17 @@ Route::middleware('admin')->group(function () {
         Route::get('/admin/model_rumah', 'index')->name('admin.model_rumah.index');
         Route::get('/admin/model_rumah/create', 'create')->name('admin.model_rumah.create');
         Route::post('/admin/model_rumah/store', 'store')->name('admin.model_rumah.store');
-        Route::get('/admin/model_rumah/edit{id}', 'edit')->name('admin.model_rumah.edit');
-        Route::put('/admin/model_rumah/update{id}', 'update')->name('admin.model_rumah.update');
-        Route::delete('/admin/model_rumah/delete/{id}', 'destroy')->name('admin.model_rumah.destroy');
-       
-        
+        Route::get('admin/edit/model_rumah/{id}', 'EditModelRumah')->name('admin.edit.model_rumah');
+        Route::post('admin/update/model_rumah/{id}', 'UpdateModelRumah')->name('admin.update.model_rumah');
+
+        // Tampilan filter by model desain
+        // Route::get('admin/desain/model_rumah/{nama_model}', 'AllDesain')->name('admin.all.desain');
+
+        // Route::get('/admin/model_rumah/edit{id}', 'edit')->name('admin.model_rumah.edit');
+        // Route::put('/admin/model_rumah/update{id}', 'update')->name('admin.model_rumah.update');
+        Route::delete('/admin/model_rumah/delete/{id}', 'HapusModelRumah')->name('admin.model_rumah.destroy');
+
+
     });
 
     // All Admin Orders

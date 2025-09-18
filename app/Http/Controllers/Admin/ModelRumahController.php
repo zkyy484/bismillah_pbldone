@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\ModelRumah;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
@@ -29,17 +30,19 @@ class ModelRumahController extends Controller
     {
 
         // ✅ Validasi data
-        $validated = $request->validate([
-            'nama_model' => 'required|string|max:16',
-            'image_path' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-        ], 
-        [
-            'nama_model.required' => 'Nama model wajib diisi',
-            'image_path.required' => 'Foto wajib diunggah',
-            'image_path.image' => 'File harus berupa gambar',
-            'image_path.mimes' => 'Format harus jpg, jpeg, atau png',
-            'image_path.max' => 'Ukuran maksimal 2MB',
-        ]);
+        $validated = $request->validate(
+            [
+                'nama_model' => 'required|string|max:16',
+                'image_path' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            ],
+            [
+                'nama_model.required' => 'Nama model wajib diisi',
+                'image_path.required' => 'Foto wajib diunggah',
+                'image_path.image' => 'File harus berupa gambar',
+                'image_path.mimes' => 'Format harus jpg, jpeg, atau png',
+                'image_path.max' => 'Ukuran maksimal 2MB',
+            ]
+        );
 
         // ✅ Proses upload gambar
         $image = $request->file('image_path');
@@ -73,34 +76,70 @@ class ModelRumahController extends Controller
 
     }
 
+    public function EditModelRumah($id) {
+        $modelRumah = ModelRumah::find($id);
+        return view('admin.backend.model_rumah.edit_model_rumah', compact('modelRumah'));
+    }
+
+    public function UpdateModelRumah(Request $request)
+    {
+        $modelRumah = $request->id;
+
+        if ($request->file('image_path')) {
+            $image = $request->file('image_path');
+            $manager = new ImageManager(new Driver());
+
+            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+
+            $save_path = public_path('upload/model_rumah/' . $name_gen);
+            
+
+            $img = $manager->read($image);
+            $img->resize(1600, 900, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+
+            $img->save($save_path);
+
+            $save_url = 'upload/model_rumah/' . $name_gen;
+
+            // Hapus gambar lama jika ada
+            $old = ModelRumah::find($modelRumah);
+            if ($old && file_exists(public_path($old->image_path))) {
+                unlink(public_path($old->image_path));
+            }
+
+            ModelRumah::find($modelRumah)->update([
+                'nama_model' => $request->nama_model,
+                'image_path' => $save_url,
+            ]);
+
+            return redirect()->route('admin.model_rumah.index')->with([
+                'message' => 'Berhasil mengubah foto Model Rumah',
+                'alert-type' => 'success'
+            ]);
+        } else {
+            ModelRumah::find($modelRumah)->update([
+                'nama_model' => $request->nama_model
+            ]);
+
+            return redirect()->route('admin.model_rumah.index')->with([
+                'message' => 'Berhasil mengubah nama Model Rumah',
+                'alert-type' => 'success'
+            ]);
+        }
+    }
+
     public function filterByCategory($id)
-{
-    $category = Category::findOrFail($id);
-    $models = ModelRumah::where('kategori_id', $id)->get();
+    {
+        $category = Category::findOrFail($id);
+        $models = ModelRumah::where('kategori_id', $id)->get();
 
-    return view('admin.model_rumah.index', compact('models', 'category'));
-}
-    // // edit form
-    // public function edit( $id)
-    // {
-    //     $modelRumah= ModelRumah::find( $id );
-    //     return view('admin.backend.model_rumah.edit_model_rumah', compact('modelRumah'));
-    // }
+        return view('admin.model_rumah.index', compact('models', 'category'));
+    }
 
-    // // update data
-    // public function update(Request $request, ModelRumah $modelRumah)
-    // {
-    //     $request->validate([
-    //         'nama_model' => 'required|string|max:255',
-    //         'status' => 'required|in:aktif,nonaktif',
-    //     ]);
-
-    //     $modelRumah->update($request->all());
-
-    //     return redirect()->route('admin.model_rumah.index')->with('success', 'Data berhasil diperbarui');
-    // }
-
-    // // hapus data
+    // hapus data
     // public function destroy($id)
     // {
     //     $modelRumah= ModelRumah::find( $id )->delete();
@@ -109,5 +148,21 @@ class ModelRumahController extends Controller
     //     }
 
     // }
+
+    public function HapusModelRumah($id)
+    {
+        $mdeolRumah = ModelRumah::find($id);
+
+        if ($mdeolRumah->photo && file_exists(public_path($mdeolRumah->photo))) {
+            unlink(public_path($mdeolRumah->photo));
+        }
+
+        $mdeolRumah->delete();
+
+        return redirect()->back()->with([
+            'message' => 'Category Berhasil Dihapus',
+            'alert-type' => 'success',
+        ]);
+    }
 
 }

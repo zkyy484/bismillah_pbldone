@@ -16,12 +16,12 @@ class ModelRumah extends Model
         'image_path'
     ];
 
-    public function modelsRumah() {
-        return $this->hasMany(Category::class);
+    public function category() {
+        return $this->hasMany(Category::class, 'model_rumah_id');
     }
 
-    public function category()
-{
-    return $this->belongsTo(Category::class, 'kategori_id');
-}
+//     public function category()
+// {
+//     return $this->belongsTo(Category::class, 'kategori_id');
+// }
 }

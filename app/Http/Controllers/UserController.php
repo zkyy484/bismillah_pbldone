@@ -8,6 +8,7 @@ use App\Models\order;
 use App\Models\Review;
 use App\Models\Transaction;
 use App\Models\User;
+use GuzzleHttp\Psr7\FnStream;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -55,6 +56,15 @@ class UserController extends Controller
     // public function Kategori() {
     //     return view('customer.detail');
     // }
+
+    public function daftarCategory()
+    {
+        $models = Category::all();
+        // print_r($kategory);
+        return view('customer.model', [
+            'models' => $models
+        ]);
+    }
 
     public function Detail()
     {
@@ -197,10 +207,10 @@ class UserController extends Controller
         return view('customer.kategori', compact('cts'));
     }
 
-    public function Daftar()  
+    public function Daftar()
     {
         return view('customer.model');
-        
+
     }
 }
 

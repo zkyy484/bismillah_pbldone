@@ -15,9 +15,9 @@
 
         <a href="{{ route('admin.model_rumah.index') }}"
             class="flex items-center px-4 py-3 group transition-all duration-200 rounded-lg hover:bg-putih hover:bg-opacity-90 hover:scale-[1.02]
-            {{ request()->routeIs('all.category') ? 'bg-putih text-cokelat font-medium' : 'text-putih' }}">
-            <i class="fas fa-drafting-compass mr-3 text-lg {{ request()->routeIs('all.category') ? 'text-cokelat' : 'group-hover:text-cokelat' }}"></i>
-            <span class="{{ request()->routeIs('all.category') ? 'text-cokelat' : 'group-hover:text-cokelat' }}">Model Bangunan</span>
+            {{ request()->routeIs() ? 'bg-putih text-cokelat font-medium' : 'text-putih' }}">
+            <i class="fas fa-drafting-compass mr-3 text-lg {{ request()->routeIs() ? 'text-cokelat' : 'group-hover:text-cokelat' }}"></i>
+            <span class="{{ request()->routeIs() ? 'text-cokelat' : 'group-hover:text-cokelat' }}">Model Bangunan</span>
         </a>
 
         <a href="{{route('all.order')}}"
