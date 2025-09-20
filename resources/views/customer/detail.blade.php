@@ -1,29 +1,38 @@
 @extends('customer.layouts.app')
 
 @section('content')
-
     <!-- Detail Rumah -->
     <section class="max-w-7xl mx-auto px-6 pt-28 pb-2 grid lg:grid-cols-2 gap-8">
         <!-- Gambar -->
-        <div class="relative rounded-2xl overflow-hidden shadow-md">
-            @if($category->images->isNotEmpty())
-                <img src="{{ asset($category->images->first()->image_path) }}" 
-                     alt="{{ $category->nama_categori }}" 
-                     class="w-full h-[400px] object-cover">
-            @else
-                <img src="https://via.placeholder.com/800x400?text=No+Image" 
-                     alt="No Image" 
-                     class="w-full h-[400px] object-cover">
-            @endif
+        <div class="relative w-full max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-md">
+            <!-- Wrapper untuk menyembunyikan slide -->
+            <div class="overflow-hidden relative w-full h-[400px]">
+                <!-- Track slider -->
+                <div id="slider" class="flex transition-transform duration-500 ease-in-out">
+                    @foreach ($category->images as $image)
+                        <div class="w-full flex-shrink-0">
+                            <img src="{{ asset($image->image_path) }}" alt="{{ $category->nama_categori }}"
+                                class="w-full h-[400px] object-cover">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
 
-            <!-- Tombol Navigasi -->
-            <button class="absolute top-1/2 left-4 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100">
+            <!-- Tombol Prev -->
+            <button id="prevBtn"
+                class="absolute top-1/2 left-4 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow">
                 ←
             </button>
-            <button class="absolute top-1/2 right-4 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100">
+
+            <!-- Tombol Next -->
+            <button id="nextBtn"
+                class="absolute top-1/2 right-4 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow">
                 →
             </button>
         </div>
+
+
+
 
         <!-- Info -->
         <div>
@@ -44,17 +53,17 @@
             <p class="text-2xl font-bold text-gray-900 mb-6">
                 Rp{{ number_format($category->base_price, 0, ',', '.') }}
             </p>
-         <!-- Tab Navigasi -->
+            <!-- Tab Navigasi -->
             <div class="flex gap-3 mb-4">
-                <a href="{{route('user.order')}}">
-                <button class="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium">pesan sekarang</button>
+                <a href="{{ route('user.order', $category->id) }}">
+                    <button class="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium">pesan sekarang</button>
                 </a>
             </div>
 
             <!-- Detail Info -->
             <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
                 <div>
-                    Ukuran Lahan: 
+                    Ukuran Lahan:
                     <span class="font-semibold">
                         {{ $category->panjang_tanah }}m x {{ $category->lebar_tanah }}m
                     </span>
@@ -63,7 +72,7 @@
                     Lantai: <span class="font-semibold">{{ $category->lantai }}</span>
                 </div>
                 <div>
-                    Luas Lahan: 
+                    Luas Lahan:
                     <span class="font-semibold">
                         {{ $category->panjang_tanah * $category->lebar_tanah }} m²
                     </span>
@@ -72,7 +81,7 @@
                     Kamar Tidur: <span class="font-semibold">{{ $category->kamar_tidur }}</span>
                 </div>
                 <div>
-                    Luas Bangunan: 
+                    Luas Bangunan:
                     <span class="font-semibold">
                         {{ $category->luas_bangunan }} m²
                     </span>
@@ -91,4 +100,32 @@
             {{ $category->description ?? 'Belum ada deskripsi.' }}
         </p>
     </section>
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.getElementById('slider');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slides = slider.querySelectorAll('div'); // ambil semua slide
+            const totalSlides = slides.length;
+
+            let index = 0;
+
+            function updateSlider() {
+                slider.style.transform = `translateX(-${index * 100}%)`;
+            }
+
+            prevBtn.addEventListener('click', function() {
+                index = (index > 0) ? index - 1 : totalSlides - 1;
+                updateSlider();
+            });
+
+            nextBtn.addEventListener('click', function() {
+                index = (index < totalSlides - 1) ? index + 1 : 0;
+                updateSlider();
+            });
+        });
+    </script>
 @endsection

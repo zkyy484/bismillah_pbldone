@@ -10,7 +10,7 @@
         <!-- First Category Section -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             @foreach ($cts as $item)
-                <a href="{{route('daftar.category')}}"
+                <a href="{{route('daftar.category', $item->id)}}"
                     class="bg-white rounded-lg overflow-hidden shadow-card hover:shadow-cardhover hover:-translate-y-1 transition-all duration-300 cursor-pointer">
                     <div class="h-48 overflow-hidden">
                         <img src="{{ (!empty($item->image_path)) ? url($item->image_path) : url('upload/rumah.jpg') }}" alt=""

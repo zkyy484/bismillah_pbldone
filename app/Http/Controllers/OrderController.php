@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-     public function CreateOrder()
+     public function CreateOrder($id)
     {
-        $categories = Category::all();
+        $categories = Category::with('images')->findOrFail($id);
         return view('customer.order', compact('categories'));
     }
 

@@ -7,19 +7,19 @@
 
     <!-- Grid Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="cards-container">
-        @foreach ($models as $model)
+        @foreach ($produk as $model)
         <!-- Card -->
         <div class="group bg-white rounded-xl shadow hover:shadow-lg transition relative overflow-hidden">
             <img src="{{ !empty($model->image_path) ? asset($model->image_path) : asset('upload/rumah.jpg') }}"
-                alt="{{ $model->nama_model }}"
+                alt=""
                 class="rounded-t-xl w-full h-48 object-cover">
 
             <div class="p-4">
-                <h3 class="font-semibold text-lg">{{ $model->nama_model }}</h3>
-                <p class="text-sm text-gray-500 mb-3">Design by {{ $model->desainer ?? 'Unknown' }}</p>
-                <div class="text-sm text-gray-700 space-y-2">
+                <h3 class="font-semibold text-lg">{{ $model->nama_categori }}</h3>
+                {{-- <p class="text-sm text-gray-500 mb-3">Design by {{ $model->desainer ?? 'Unknown' }}</p> --}}
+                <div class="text-sm text-gray-700 space-y-2">   
                     <p>Lahan Minimal <b>{{ $model->lahan_minimal }}</b></p>
-                    <p>Biaya Konstruksi <b>Rp{{ number_format($model->biaya_konstruksi, 0, ',', '.') }}</b></p>
+                    <p>Biaya Konstruksi <b>Rp{{ number_format($model->base_price, 0, ',', '.') }}</b></p>
                 </div>
             </div>
 

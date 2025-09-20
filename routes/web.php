@@ -19,8 +19,9 @@ Route::get('/contact', [UserController::class, 'showContact'])->name('show.conta
 Route::get('/about_us', [UserController::class, 'showAboutUs'])->name('show.about_us');
 Route::get('/', [UserController::class, 'index'])->name('index');
 Route::get('/model', [UserController::class, 'Daftar'])->name('show.model');
+Route::get('daftar/category/{id}', [UserController::class, 'daftarCategory'])->name('daftar.category');
+Route::get('/desain/{id}', [UserController::class, 'showCategory'])->name('kategori.detail');
 
-Route::get('daftar/category', [UserController::class, 'daftarCategory'])->name('daftar.category');
 
 Route::get('/dashboard', function () {
     return view('customer.dashboard.dashboard');
@@ -38,7 +39,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/history/transaksi', [UserController::class, 'HistoryTransaksi'])->name('user.history.transaksi');
 
     // tampilan detail kategory
-    Route::get('/kategori/{id}', [UserController::class, 'showCategory'])->name('kategori.detail');
     Route::get('/order/desain', [OrderController::class, 'CreateOrder'])->name('user.order');
     Route::post('/user/order/desain', [OrderController::class, 'StoreOrder'])->name('user.order.desain');
 
@@ -95,7 +95,6 @@ Route::middleware('admin')->group(function () {
         Route::get('/delete/category/{id}', 'DeleteCategory')->name('delete.category');
         Route::get('/admin/detail/category/{id}', 'DetailCategory')->name('admin.detail.category');
         Route::patch('/admin/category/{id}/status', 'ToggleStatus')->name('admin.category.status');
-        Route::get('admin/category/filter/{id}', [ModelRumahController::class, 'filterByCategory'])->name('admin.category.filter');
 
         Route::get('/admin/model-rumah/{id}/categories', 'AllDesain')->name('admin.all.desain');
 
@@ -108,7 +107,7 @@ Route::middleware('admin')->group(function () {
         // Route::get('/add/cat_image', 'AddCatImage')->name('add.catimage');
         // Route::get('/edit/cat_image/{id}', 'EditCatImage')->name('edit.catimage');
         // Route::post('/update/cat_image', 'UpdateCatImage')->name('update.catimage');
-        Route::get('/delete/cat_image/{id}', 'DeleteCatImage')->name('delete.catimage');
+        Route::post('/delete/cat_image/{id}', 'DeleteCatImage')->name('delete.catimage');
         Route::post('/add/cat_image/{id}', 'StoreCatImage')->name('catimage.store');
     });
 
@@ -146,6 +145,7 @@ Route::middleware('admin')->group(function () {
         Route::post('/admin/transactions/{transaction}/status', 'UpdateTransaksi')->name('admin.update.transaksi');
     });
 
+    // AllReview
     Route::controller(ReviewController::class)->group(function () {
         Route::get('/admin/all/ulasan', 'AdminReview')->name('ulasan');
         Route::post('/admin/approve/ulasan/{id}', 'ApproveReview')->name('admin.approve.ulasan');

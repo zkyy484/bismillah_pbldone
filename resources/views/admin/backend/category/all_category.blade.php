@@ -6,13 +6,7 @@
             <h1 class="text-2xl font-bold text-gray-800">
                 DAFTAR MODEL {{ ucfirst($modelRumah->nama_model) }}
             </h1>
-            {{-- @isset($category)
-        (Kategori: {{ $category->nama_categori }})
-    @endisset --}}
 
-            {{-- @foreach ($produk as $item)
-                {{ $item->nama_categori }}
-            @endforeach --}}
             </h1>
             <a href="{{ route('add.category') }}"
                 class="bg-cokelat hover:bg-amber-800 text-white px-4 py-2 rounded-lg flex items-center">
@@ -21,16 +15,6 @@
             </a>
         </div>
 
-        <!-- Daftar Kategori untuk Filter -->
-        {{-- <div class="flex space-x-3 mb-6">
-            @foreach (\App\Models\Category::all() as $cat)
-                <a href="{{ route('admin.category.filter', $cat->id) }}"
-                   class="px-4 py-2 rounded {{ isset($category) && $category->id == $cat->id ? 'bg-blue-600 text-white' : 'bg-gray-200' }}">
-                    {{ $cat->nama_categori }}
-                </a>
-            @endforeach
-        </div> --}}
-        {{-- <input type="" name="model_rumah_id" value="{{ $modelRumah->id }}"> --}}
         <div class="bg-white rounded-lg shadow overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="min-w-full table-fixed border-collapse">
@@ -88,10 +72,6 @@
                                                 Nonaktif
                                             </span>
                                         @endif
-                                    </td>
-
-                                    <!-- Action -->
-                                    <td class="w-64 px-4 py-4 text-center text-sm text-gray-500 space-x-2">
                                         <!-- Tombol Toggle Status -->
                                         <form action="{{ route('admin.category.status', $item->id) }}" method="POST"
                                             class="inline">
@@ -103,6 +83,11 @@
                                                 {{ $item->status == 'active' ? 'Nonaktifkan' : 'Aktifkan' }}
                                             </button>
                                         </form>
+                                    </td>
+
+                                    <!-- Action -->
+                                    <td class="w-64 px-4 py-4 text-center text-sm text-gray-500 space-x-2">
+
 
                                         <!-- Tombol Edit -->
                                         <a href="{{ route('edit.category', $item->id) }}"

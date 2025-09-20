@@ -98,10 +98,12 @@ class CategoryController extends Controller
             'model_rumah_id' => $request->model_rumah_id, // 🔥 simpan relasi
         ]);
 
-        return redirect()->route('admin.all.desain', $request->model_rumah_id)->with([
-            'message' => 'Berhasil menambahkan kategori',
-            'alert-type' => 'success',
-        ]);
+        $notification = array(
+            'message' => 'Desain Rumah Berhhasil Dditambahkan',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('admin.all.desain', $request->model_rumah_id)->with($notification);
     }
 
     public function EditCategory($id)
@@ -118,10 +120,12 @@ class CategoryController extends Controller
         $category->status = $category->status === 'active' ? 'inactive' : 'active';
         $category->save();
 
-        return redirect()->back()->with([
-            'message' => 'Status kategori berhasil diperbarui!',
+        $notification = array(
+            'message' => 'Status Desain Berhasil Diperbarui',
             'alert-type' => 'success'
-        ]);
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function UpdateCategory(Request $request)

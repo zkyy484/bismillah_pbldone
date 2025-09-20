@@ -176,8 +176,8 @@
     @include('customer.layouts.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-        crossorigin="anonymous"></script>
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
+    </script>
 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
@@ -193,11 +193,11 @@
 
         const dropdownButton = document.getElementById('dropdownButton');
         const dropdownMenu = document.getElementById('dropdownMenu');
-        dropdownButton.addEventListener('click', function () {
+        dropdownButton.addEventListener('click', function() {
             dropdownMenu.classList.toggle('hidden');
         });
 
-        document.addEventListener('click', function (e) {
+        document.addEventListener('click', function(e) {
             if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
                 dropdownMenu.classList.add('hidden');
             }
@@ -219,7 +219,7 @@
 
     <script>
         // Inisialisasi Swiper
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             new Swiper('.swiper-container', {
                 loop: true,
                 pagination: {
@@ -236,7 +236,7 @@
 
     {{-- Slideshow --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const slideshow = document.getElementById('manual-slideshow');
             const slideImages = [
                 "{{ url('upload/slideshow/slide1.jpg') }}",
@@ -251,7 +251,8 @@
                 const slide = document.createElement('div');
                 slide.className = `absolute inset-0 w-full h-full transition-opacity duration-1000 ${index === 0 ? 'opacity-100' :
                     'opacity-0'}`;
-                slide.innerHTML = `<img src="${imgSrc}" alt="Slide ${index + 1}" class="w-full h-full object-cover">`;
+                slide.innerHTML =
+                    `<img src="${imgSrc}" alt="Slide ${index + 1}" class="w-full h-full object-cover">`;
                 slideshow.appendChild(slide);
             });
 
@@ -266,6 +267,7 @@
             }, 3000);
         });
     </script>
+    @yield('scripts')
 </body>
 
 </html>

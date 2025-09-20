@@ -20,8 +20,16 @@ class UserController extends Controller
     // tampilan homepage
     public function index()
     {
-        $allcts = Category::orderBy('id', 'asc')->take(6)->get();
-        $cts = Category::orderBy('id', 'asc')->take(3)->get();
+        // ambil hanya kategori aktif
+        $allcts = Category::where('status', 'active')
+            ->orderBy('id', 'asc')
+            ->take(6)
+            ->get();
+
+        $cts = Category::where('status', 'active')
+            ->orderBy('id', 'asc')
+            ->take(3)
+            ->get();
 
         // Hanya ambil review yang disetujui
         $reviews = Review::with(['user', 'order.category'])
@@ -53,16 +61,20 @@ class UserController extends Controller
 
 
 
-    // public function Kategori() {
-    //     return view('customer.detail');
-    // }
 
-    public function daftarCategory()
+
+    public function daftarCategory($id)
     {
-        $models = Category::all();
-        // print_r($kategory);
+
+        // Cari model rumah
+        $modelRumah = \App\Models\ModelRumah::findOrFail($id);
+
+        // Ambil hanya kategori/produk yang punya model_rumah_id sesuai
+        $produk = \App\Models\Category::where('model_rumah_id', $id)->get();
+
         return view('customer.model', [
-            'models' => $models
+            'modelRumah' => $modelRumah,
+            'produk' => $produk
         ]);
     }
 
@@ -181,7 +193,6 @@ class UserController extends Controller
             ->get();
         return view('customer.dashboard.transaksi', compact('transactions'));
     }
-
 
 
     // Frontend

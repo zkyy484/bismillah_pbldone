@@ -7,11 +7,24 @@
         <section class="grid lg:grid-cols-2 gap-8">
             <!-- Gambar -->
             <div class="relative rounded-2xl overflow-hidden shadow-md">
-                <div id="slider" class="flex transition-transform duration-500" style="transform: translateX(0);">
+                <div id="slider" class="flex transition-transform duration-500">
                     @if ($category->images->isNotEmpty())
                         @foreach ($category->images as $image)
-                            <img src="{{ asset($image->image_path) }}" alt="{{ $category->nama_categori }}"
-                                class="w-full h-[400px] object-cover">
+                            <div class="relative w-full flex-shrink-0">
+                                <!-- Gambar -->
+                                <img src="{{ asset($image->image_path) }}" alt="{{ $category->nama_categori }}"
+                                    class="w-full h-[400px] object-cover">
+
+                                <!-- Tombol Hapus (pojok kanan atas) -->
+                                <form action="{{ route('delete.catimage', $image->id) }}" method="POST"
+                                    class="absolute top-2 right-2">
+                                    @csrf
+                                    <button type="submit" class="bg-red-600 text-white rounded-full p-1 hover:bg-red-700"
+                                        onclick="return confirm('Yakin hapus foto ini?')">
+                                        ✕
+                                    </button>
+                                </form>
+                            </div>
                         @endforeach
                     @else
                         <img src="https://via.placeholder.com/800x400?text=No+Image" alt="No Image"
@@ -19,8 +32,6 @@
                     @endif
                 </div>
 
-
-                <!-- Tombol Navigasi -->
                 <button id="prevBtn"
                     class="absolute top-1/2 left-4 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100">
                     ←
@@ -30,6 +41,7 @@
                     →
                 </button>
             </div>
+
 
             <!-- Info -->
 
@@ -84,7 +96,7 @@
     </div>
 @endsection
 
-@section('script')
+@section('scripts')
     <script>
         function previewMultiple(event) {
             let previewDiv = document.getElementById('multiPreview');
@@ -121,5 +133,51 @@
                     break;
             }
         @endif
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded'); // Debug
+
+            const slider = document.getElementById('slider');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (!slider) {
+                console.error('Slider element not found');
+                return;
+            }
+
+            if (!prevBtn || !nextBtn) {
+                console.error('Navigation buttons not found');
+                return;
+            }
+
+            const images = slider.querySelectorAll('img');
+            const totalSlides = images.length;
+
+            console.log('Total slides:', totalSlides); // Debug
+
+            let index = 0;
+
+            prevBtn.addEventListener('click', function() {
+                console.log('Prev button clicked'); // Debug
+                index = (index > 0) ? index - 1 : totalSlides - 1;
+                updateSlider();
+            });
+
+            nextBtn.addEventListener('click', function() {
+                console.log('Next button clicked'); // Debug
+                index = (index < totalSlides - 1) ? index + 1 : 0;
+                updateSlider();
+            });
+
+            function updateSlider() {
+                console.log('Current index:', index); // Debug
+                const translateValue = -(index * 100);
+                console.log('Translate value:', translateValue + '%'); // Debug
+                slider.style.transform = `translateX(${translateValue}%)`;
+            }
+        });
     </script>
 @endsection
