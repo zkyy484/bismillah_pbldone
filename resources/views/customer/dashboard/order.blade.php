@@ -171,7 +171,7 @@
                                                         </span>
                                                     @endif
 
-                                                    <a href="{{ route('user.order') }}"
+                                                    <a href="{{ route('user.order', $order->id) }}"
                                                         class="w-1/2 text-center bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
                                                         Pesan Lagi
                                                     </a>

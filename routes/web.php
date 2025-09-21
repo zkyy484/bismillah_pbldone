@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/history/transaksi', [UserController::class, 'HistoryTransaksi'])->name('user.history.transaksi');
 
     // tampilan detail kategory
-    Route::get('/order/desain', [OrderController::class, 'CreateOrder'])->name('user.order');
+    Route::get('/order/desain/{id}', [OrderController::class, 'CreateOrder'])->name('user.order');
     Route::post('/user/order/desain', [OrderController::class, 'StoreOrder'])->name('user.order.desain');
 
     // transaksi

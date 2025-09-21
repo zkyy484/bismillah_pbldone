@@ -33,7 +33,7 @@
                     <p><span class="block text-gray-500">Jumlah Lantai</span><b>{{ $model->jumlah_lantai }}</b></p>
                     <p><span class="block text-gray-500">Kamar Mandi</span><b>{{ $model->kamar_mandi }}</b></p>
                 </div>
-                <a href=""
+                <a href="{{route('kategori.detail', $model->id)}}"
                    class="block w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
                     Lihat Detail
                 </a>

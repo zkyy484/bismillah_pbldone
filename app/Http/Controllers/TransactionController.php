@@ -21,33 +21,33 @@ class TransactionController extends Controller
     }
 
     public function TransaksiStore(Request $request, Order $order)
-{
-    $validated = $request->validate([
-        'payment_method' => 'required|string',
-        'amount' => 'required|numeric',
-        'payment_receipt' => 'required|file|mimes:jpg,png,pdf|max:5120',
-    ]);
+    {
+        $validated = $request->validate([
+            'payment_method' => 'required|string',
+            'amount' => 'required|numeric',
+            'payment_receipt' => 'required|file|mimes:jpg,png,pdf|max:5120',
+        ]);
 
-    // Simpan bukti pembayaran ke folder public/upload/image_transaksi
-    $receipt_path = null;
-    if ($request->hasFile('payment_receipt')) {
-        $file = $request->file('payment_receipt');
-        $filename = time() . '_' . $file->getClientOriginalName(); // nama file unik
-        $file->move(public_path('upload/image_transaksi'), $filename);
-        $receipt_path = 'upload/image_transaksi/' . $filename;
+        // Simpan bukti pembayaran ke folder public/upload/image_transaksi
+        $receipt_path = null;
+        if ($request->hasFile('payment_receipt')) {
+            $file = $request->file('payment_receipt');
+            $filename = time() . '_' . $file->getClientOriginalName(); // nama file unik
+            $file->move(public_path('upload/image_transaksi'), $filename);
+            $receipt_path = 'upload/image_transaksi/' . $filename;
+        }
+
+        // Buat transaksi
+        $transaksi = Transaction::create([
+            'order_id' => $order->id,
+            'payment_method' => $validated['payment_method'],
+            'amount' => $validated['amount'],
+            'status' => 'pending',
+            'payment_receipt' => $receipt_path,
+        ]);
+
+        return redirect()->route('user.thanks', $transaksi->id)->with('success', 'Pembayaran berhasil dibuat. Tunggu konfirmasi admin.');
     }
-
-    // Buat transaksi
-    $transaksi = Transaction::create([
-        'order_id' => $order->id,
-        'payment_method' => $validated['payment_method'],
-        'amount' => $validated['amount'],
-        'status' => 'pending',
-        'payment_receipt' => $receipt_path,
-    ]);
-
-    return redirect()->route('user.thanks', $transaksi->id)->with('success', 'Pembayaran berhasil dibuat. Tunggu konfirmasi admin.');
-}
 
 
 

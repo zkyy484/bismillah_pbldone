@@ -59,10 +59,6 @@ class UserController extends Controller
         ));
     }
 
-
-
-
-
     public function daftarCategory($id)
     {
 
@@ -78,10 +74,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function Detail()
-    {
-        return view('customer.detail');
-    }
+    // public function Detail()
+    // {
+    //     return view('customer.detail');
+    // }
 
     public function Order()
     {
