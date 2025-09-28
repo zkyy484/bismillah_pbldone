@@ -131,20 +131,14 @@
                                             </p>
                                         </div>
 
-                                        {{-- Tombol aksi (opsional) --}}
                                         <div class="mt-4">
-                                            @if($transaction->status === 'confirmed')
-                                                <a href="{{ route('customer.pay', $transaction->id) }}"
+                                            <a href="{{ route('invoice.download', $transaction->order_id) }}"
                                                     class="inline-block bg-primary text-white px-4 py-2 rounded hover:bg-primaryHover">
-                                                    Bayar Sekarang
+                                                    Unduh Invoice
                                                 </a>
-                                            @elseif($transaction->status === 'complete')
-                                                <a href="{{ route('customer.review', $transaction->id) }}"
-                                                    class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                                    Beri Ulasan
-                                                </a>
-                                            @endif
                                         </div>
+
+                
                                     </div>
                                 </div>
                             @empty

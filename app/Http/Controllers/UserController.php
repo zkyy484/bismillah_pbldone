@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\ModelRumah;
 use App\Models\order;
@@ -20,16 +21,23 @@ class UserController extends Controller
     // tampilan homepage
     public function index()
     {
+        $banner = Banner::where('status', 'active')
+            ->orderBy('id', 'asc')
+            ->take(4)
+            ->get();
+
         // ambil hanya kategori aktif
         $allcts = Category::where('status', 'active')
             ->orderBy('id', 'asc')
-            ->take(6)
+            ->take(18)
             ->get();
 
         $cts = Category::where('status', 'active')
             ->orderBy('id', 'asc')
             ->take(3)
             ->get();
+
+        $model = ModelRumah::all();
 
         // Hanya ambil review yang disetujui
         $reviews = Review::with(['user', 'order.category'])
@@ -38,39 +46,31 @@ class UserController extends Controller
             ->take(6)
             ->get();
 
-        // Hitung berdasarkan review yang disetujui
-        $totalReviews = Review::where('is_approved', true)->count();
-
-        $averageRating = Review::where('is_approved', true)->avg('rating');
-
-        $ratingsCount = Review::where('is_approved', true)
-            ->select('rating', DB::raw('count(*) as total'))
-            ->groupBy('rating')
-            ->pluck('total', 'rating')
-            ->toArray();
-
         return view('customer.home', compact(
             'cts',
+            'banner',
             'allcts',
             'reviews',
-            'totalReviews',
-            'averageRating',
-            'ratingsCount'
+            'model'
         ));
     }
 
     public function daftarCategory($id)
     {
-
         // Cari model rumah
         $modelRumah = \App\Models\ModelRumah::findOrFail($id);
 
-        // Ambil hanya kategori/produk yang punya model_rumah_id sesuai
-        $produk = \App\Models\Category::where('model_rumah_id', $id)->get();
+        // Ambil hanya kategori yang aktif dan sesuai model_rumah_id
+        $produkAktif = \App\Models\Category::where('model_rumah_id', $id)
+            ->where(function ($query) {
+                $query->where('status', 'active')
+                    ->orWhere('status', 1);
+            })
+            ->get();
 
         return view('customer.model', [
             'modelRumah' => $modelRumah,
-            'produk' => $produk
+            'produk' => $produkAktif // Langsung produk aktif
         ]);
     }
 

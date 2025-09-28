@@ -28,7 +28,7 @@
                         <h3 class="font-medium text-gray-700 mb-3">Detail Transaksi</h3>
                         <div class="flex justify-between py-2 border-b border-gray-100">
                             <span class="text-gray-600">Nomor Pesanan:</span>
-                            <span class="font-medium">#00{{ $cts->order_id ?? 'NAZARCH' }}NAZARCH</span>
+                            <span class="font-medium">#00{{ $cts->order_id +1 ?? 'NAZARCH' }}NAZARCH</span>
                         </div>
                         <div class="flex justify-between py-2 border-b border-gray-100">
                             <span class="text-gray-600">Metode:</span>
@@ -40,6 +40,15 @@
                         </div>
 
                     </div>
+
+                    <!--tombol invoice-->
+                        <div class="mt-6 text-center">
+                        <a href="{{ route('invoice.download', $cts->order_id) }}" 
+                           class="inline-block px-6 py-3 bg-coklat text-white rounded-lg font-bold hover:bg-coklat-dark transition">
+                            Download Invoice (PDF)
+                        </a>
+                    </div>
+                    <!--invoice-->
 
                     <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
                         <a href="{{route('user.history.order')}}"

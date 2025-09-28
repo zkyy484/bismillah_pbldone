@@ -184,12 +184,13 @@ class CategoryController extends Controller
             ]);
 
             $notification = [
-                'message' => 'Berhasil mengubah kategori',
+                'message' => 'Berhasil mengubah data desain rumah',
                 'alert-type' => 'success',
             ];
         }
 
-        return redirect()->route('all.category')->with($notification);
+        // ✅ PERBAIKAN: Ambil model_rumah_id dari category yang sudah ada
+        return redirect()->route('admin.all.desain', $category->model_rumah_id)->with($notification);
     }
 
     public function DeleteCategory($id)

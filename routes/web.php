@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CategoryImageController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\ModelRumahController;
+use App\Http\Controllers\InvoiceController;
 
 
 Route::get('/category', [UserController::class, 'showModel'])->name('show.kategory');
@@ -42,10 +44,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/order/desain/{id}', [OrderController::class, 'CreateOrder'])->name('user.order');
     Route::post('/user/order/desain', [OrderController::class, 'StoreOrder'])->name('user.order.desain');
 
+    // invoice
+    Route::get('/invoice/{id}/download', [InvoiceController::class, 'downloadPdf'])->name('invoice.download');
+
     // transaksi
     Route::get('/user/transaksi/{order}', [TransactionController::class, 'CreateTransaksi'])->name('user.transaksi');
     Route::post('/user/transaksi/done/{order}', [TransactionController::class, 'TransaksiStore'])->name('user.transaksi.desain');
-    Route::delete('/admin/transaksi/delete/{id}', [TransactionController::class, 'DeleteTransaksi'])->name('transaksi.delete');
     Route::get('/user/thanks/{id}', [TransactionController::class, 'Thanks'])->name('user.thanks');
 
     // Ulasan
@@ -143,6 +147,8 @@ Route::middleware('admin')->group(function () {
         Route::get('/admin/all/transaksi', 'AllTransaksi')->name('transaksi');
         Route::get('/admin/edit/transaksi/{transaction}', 'EditTransaksi')->name('admin.edit.transaksi');
         Route::post('/admin/transactions/{transaction}/status', 'UpdateTransaksi')->name('admin.update.transaksi');
+        Route::post('/admin/transaksi/delete/{id}', 'DeleteTransaksi')->name('transaksi.delete');
+
     });
 
     // AllReview
@@ -150,6 +156,16 @@ Route::middleware('admin')->group(function () {
         Route::get('/admin/all/ulasan', 'AdminReview')->name('ulasan');
         Route::post('/admin/approve/ulasan/{id}', 'ApproveReview')->name('admin.approve.ulasan');
         Route::patch('/admin/reviews/{review}/unapprove', 'unapprove')->name('admin.unapprove.ulasan');
+
+    });
+
+    //Banner
+    Route::controller(BannerController::class)->group(function (): void {
+        Route::get('/admin/banner', 'BannerView')->name('admin.banner');
+        Route::get('/admin/tambahbannner', 'TambahBanner')->name('admin.tambah.banner');
+        Route::post('/admin/banner/store', 'BannerStore')->name('admin.banner.store');
+        Route::post('/admin/delete/banner/{id}', 'BannerDelete')->name('admin.banner.delete');
+        Route::patch('/admin/banner/{id}/status', 'BannerStatus')->name('admin.banner.status');
 
     });
 });

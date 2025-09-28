@@ -9,7 +9,7 @@
             <div class="flex items-center gap-4 min-w-[180px]">
                 <img src="{{url('upload/image.png') }}"
                     alt="Logo" class="w-11 h-11 object-cover rounded-full border-2 border-white">
-                <a href="{{ route('index') }}" class="text-white text-xl font-bold">Nazarch Studio</a>
+                <a href="{{ route('index') }}" class="text-white text-xl font-semibold">Nazarch Studio</a>
             </div>
 
             <!-- Middle Section -->
