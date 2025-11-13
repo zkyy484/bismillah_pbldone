@@ -29,7 +29,9 @@ Route::get('/dashboard', function () {
     return view('customer.dashboard.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
+Route::get('/developinfo', function () {
+    return view('customer.dashboard.developinfo');})
+    ->name('developinfo');
 
 // Custom Activity Akun User
 Route::middleware('auth')->group(function () {

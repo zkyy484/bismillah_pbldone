@@ -15,9 +15,9 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $obj = new Admin();
-        $obj->name = 'Admin';
-        $obj->email = 'admin@gmail.com';
-        $obj->password = Hash::make('123');
+        $obj->name = 'Nazarch Studio';
+        $obj->email = 'dwi60522@gmail.com';
+        $obj->password = Hash::make('admin123');
         $obj->save();
     }
 }

@@ -4,7 +4,7 @@
     <div class="container mx-auto px-4 py-4">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">
-                DAFTAR MODEL {{ ucfirst($modelRumah->nama_model) }}
+                DAFTAR BANGUNAN {{ ucfirst($modelRumah->nama_model) }}
             </h1>
 
             </h1>

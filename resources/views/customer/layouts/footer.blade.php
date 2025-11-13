@@ -23,15 +23,15 @@
                 <h3 class="text-lg font-semibold border-b-2 border-white inline-block mb-3 pb-1">Contact Us</h3>
                 <div class="flex items-start gap-2 mb-2">
                     <i class="fas fa-map-marker-alt mt-1"></i>
-                    <span class="text-sm">3015 Grand Ave, Coconut Grove, Merrick Way, FL 12345</span>
+                    <span class="text-sm">jln cengkeh, grogol giri banyuwangi</span>
                 </div>
                 <div class="flex items-center gap-2 mb-2">
                     <i class="fas fa-phone-alt"></i>
-                    <span class="text-sm">+023-456-789</span>
+                    <span class="text-sm">+62 857-4841-1185</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <i class="fas fa-envelope"></i>
-                    <span class="text-sm">sales@example.com</span>
+                    <span class="text-sm">nazastudio1223@gmail.com</span>
                 </div>
             </div>
 
@@ -60,8 +60,13 @@
         </div>
 
         <div class="pt-5 border-t border-white/10 text-center text-light text-sm space-y-1">
-            <p>&copy; 2025 Nazarch Studio. Semua hak dilindungi undang-undang.</p>
-            <p>Dirancang Oleh Tim Nazarch</p>
+            <p>Copyright &copy; 2025 
+                <a href="https://poliwangi.ac.id/" target="_blank" rel="noopener noreferrer"
+       class="text-white-400 hover:text-blue-300 transition-colors">
+       poliwangi.ac.id</a></p>
         </div>
+        <div class="pt-1 text-center text-light text-sm space-y-1">
+         <p>Dirancang Oleh <a href="{{ route('developinfo') }}" class="pt-5 border-t border-white/10 text-center text-light text-sm space-y-1">Tim Nazarch</a></p>
+         </div>
     </div>
 </footer>

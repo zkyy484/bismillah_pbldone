@@ -64,7 +64,7 @@
     <div class="border-t border-abu/20 my-4"></div>
 
     <!-- Bottom: Pengaturan Akun -->
-    <div class="absolute bottom-0 left-0 right-0 p-4">
+    <div class="absolute bottom-14 left-0 right-0 p-4">
         <a href="{{ route('admin.profile') }}"
             class="flex items-center px-4 py-3 group transition-all duration-200 rounded-lg hover:bg-putih hover:bg-opacity-90 hover:scale-[1.02]
             {{ request()->routeIs('admin.profile') ? 'bg-putih text-cokelat font-medium' : 'text-putih' }}">
@@ -77,6 +77,15 @@
             <span
                 class="{{ request()->routeIs('admin.profile') ? 'text-cokelat' : 'group-hover:text-cokelat' }}">Pengaturan
                 Akun</span>
+        </a>
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 p-4">
+        <a href="{{ route('admin.logout') }}"
+            class="flex items-center px-4 py-3 group transition-all duration-200 rounded-lg hover:bg-putih hover:bg-opacity-90 hover:scale-[1.02]
+            {{ request()->routeIs('admin.logout') ? 'bg-putih text-cokelat font-medium' : 'text-putih' }}">
+            <span
+                class="{{ request()->routeIs('admin.logout') ? 'text-cokelat' : 'group-hover:text-cokelat' }}">Keluar</span>
         </a>
     </div>
 </aside>

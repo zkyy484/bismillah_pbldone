@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-4">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">DAFTAR MODEL RUMAH</h1>
+        <h1 class="text-2xl font-bold text-gray-800">DAFTAR KATEGORI RUMAH</h1>
         <a href="{{ route('admin.model_rumah.create') }}"
             class="bg-cokelat hover:bg-amber-800 text-white px-4 py-2 rounded-lg flex items-center">
             <i class="fas fa-plus mr-2"></i>
